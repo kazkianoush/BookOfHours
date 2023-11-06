@@ -20,6 +20,7 @@
         - Assisstant
         - Visitor
         - Item
+    - Upload data to database (and probably clean data from the sheet into csv)
 
 3. Create REST APIs with database (Deadline: Nov 19, will be done by Danny, Kaz, Norman)
     - TASKS TO BE ADDED
