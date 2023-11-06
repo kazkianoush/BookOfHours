@@ -303,18 +303,17 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 -- Adding Data
 -- -----------------------------------------------------
-INSERT INTO Memory(memoryID, memoryName, memorySources, memoryIsSound, memoryIsOmen, memoryIsPersistent, memoryIsWeather)
-VALUES (`ME001`, `Memory: Taste`, `Considering sustenance and beverages`, 0, 0, 0, 0);
+INSERT IGNORE INTO Memory(memoryID, memoryName, memorySources, memoryIsSound, memoryIsOmen, memoryIsPersistent, memoryIsWeather)
+VALUES ('ME001', 'Memory: Taste', 'Considering sustenance and beverages', 0, 0, 0, 0);
 
-INSERT INTO Memory(memoryID, memoryName, memorySources, memoryIsSound, memoryIsOmen, memoryIsPersistent, memoryIsWeather)
-VALUES (`ME002`, `Memory: Sound`, `Considering the Hush House Key`, 0, 0, 0, 0);
+INSERT IGNORE INTO Memory(memoryID, memoryName, memorySources, memoryIsSound, memoryIsOmen, memoryIsPersistent, memoryIsWeather)
+VALUES ('ME002', 'Memory: Sound', 'Considering the Hush House Key', 0, 0, 0, 0);
 
-INSERT INTO Memory(memoryID, memoryName, memorySources, memoryIsSound, memoryIsOmen, memoryIsPersistent, memoryIsWeather)
-VALUES (`ME007`, `Memory: Foresight`, `Edge or Forge books`, 0, 0, 0, 0);
+INSERT IGNORE INTO Memory(memoryID, memoryName, memorySources, memoryIsSound, memoryIsOmen, memoryIsPersistent, memoryIsWeather)
+VALUES ('ME007', 'Memory: Foresight', 'Edge or Forge books', 0, 0, 0, 0);
 
-INSERT INTO Memory(memoryID, memoryName, memorySources, memoryIsSound, memoryIsOmen, memoryIsPersistent, memoryIsWeather)
-VALUES (`ME023`, `Beguiling Melody`, `Grail books or Grail 5 craft`, 1, 0, 0, 0);
+INSERT IGNORE INTO Memory(memoryID, memoryName, memorySources, memoryIsSound, memoryIsOmen, memoryIsPersistent, memoryIsWeather)
+VALUES ('ME023', 'Beguiling Melody', 'Grail books or Grail 5 craft', 1, 0, 0, 0);
 
-INSERT INTO Memory(memoryID, memoryName, memorySources, memoryIsSound, memoryIsOmen, memoryIsPersistent, memoryIsWeather)
-VALUES (`ME042`, `Earthquake Name`, `Scale 15 crafts`, 0, 1, 1, 0);
-
+INSERT IGNORE INTO Memory(memoryID, memoryName, memorySources, memoryIsSound, memoryIsOmen, memoryIsPersistent, memoryIsWeather)
+VALUES ('ME042', 'Earthquake Name', 'Scale 15 crafts', 0, 1, 1, 0);

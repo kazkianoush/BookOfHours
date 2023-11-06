@@ -5,7 +5,16 @@ const fs = require('fs');
 const queries = fs.readFileSync("./CPSC304Script.sql", {encoding: 'utf8'}).toString();
 
 
-const connection = mysql.createConnection(`mysql://${process.env.usern}:${process.env.password}@${process.env.host}:${process.env.port}/${process.env.database}`, {multipleStatements: true});
+const connection = mysql.createConnection(
+    {
+        host: process.env.host,
+        user: process.env.usern,
+        password: process.env.password,
+        port : process.env.port,
+        database: process.env.database,
+        multipleStatements: true
+    }
+);
 
 connection.connect(async (err) => {
     if (err) {
@@ -18,12 +27,17 @@ connection.connect(async (err) => {
 });
 
 const runScript = async () => {
-    const queryResult = await connection.promise().query(queries).then((err, result) => {
-        if (err) {
-            console.log("Query error: " + err.message);
-            return;
-        }
-        console.log(result);
-    })
+    try {
+        await connection.promise().query(queries);
+
+        const queryResult = await connection.promise().query("SELECT * FROM Memory").then((r) => {
+            return r;
+        })
+        console.log(queryResult);
+    } catch (err) {
+        console.log("Query error: " + err.message);
+    } finally {
+        connection.end();
+    }
 }
 // connection.end();
