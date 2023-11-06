@@ -11,3 +11,5 @@ Instruction for connecting to the server:
 1. From root, open terminal and run `cd backend`.
 2. If not already, add an `.env` file with the server credentials in the same folder (credentials are in groupchat).
 3. On terminal, run `npm install` and then `node server.js`.
+
+Make sure to frequenly check `./project_info/Milestone 3 Timeline.md` to see which tasks need to be done
