@@ -24,20 +24,39 @@ connection.connect(async (err) => {
     console.log('Connected!');
     
     runScript();
+    userInput =  await takeInput();
+    await takeQuery(userInput);
+    connection.end();
 });
+
 
 const runScript = async () => {
     try {
         await connection.promise().query(queries);
-
-        const queryResult = await connection.promise().query("SELECT * FROM Memory").then((r) => {
-            return r;
-        })
-        console.log(queryResult);
     } catch (err) {
         console.log("Query error: " + err.message);
-    } finally {
-        connection.end();
-    }
+    } 
 }
-// connection.end();
+
+
+const readline = require('readline');
+const takeInput = async () => {
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+  return new Promise((resolve) => {
+    rl.question('Enter ID for the query: ', (input) => {
+      resolve(input);
+      rl.close();
+    });
+  });
+};
+
+
+const takeQuery =  async (userInput) => {
+    const queryResult = await connection.promise().query("SELECT * FROM Memory WHERE memoryID = ?", [userInput]);
+    console.log(queryResult);
+} 
+
+

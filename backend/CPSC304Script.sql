@@ -317,3 +317,6 @@ VALUES ('ME023', 'Beguiling Melody', 'Grail books or Grail 5 craft', 1, 0, 0, 0)
 
 INSERT IGNORE INTO Memory(memoryID, memoryName, memorySources, memoryIsSound, memoryIsOmen, memoryIsPersistent, memoryIsWeather)
 VALUES ('ME042', 'Earthquake Name', 'Scale 15 crafts', 0, 1, 1, 0);
+
+
+
