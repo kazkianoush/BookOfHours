@@ -1,6 +1,7 @@
 require('dotenv').config();
 const mysql = require('mysql2');
 const fs = require('fs');
+const readline = require('readline');
 
 const queries = fs.readFileSync("./CPSC304Script.sql", {encoding: 'utf8'}).toString();
 
@@ -38,8 +39,6 @@ const runScript = async () => {
     } 
 }
 
-
-const readline = require('readline');
 const takeInput = async () => {
   const rl = readline.createInterface({
     input: process.stdin,
@@ -55,8 +54,24 @@ const takeInput = async () => {
 
 
 const takeQuery =  async (userInput) => {
-    const queryResult = await connection.promise().query("SELECT * FROM Memory WHERE memoryID = ?", [userInput]);
-    console.log(queryResult);
+    // split input into two parts, letterID and numberID
+    letterID = userInput[0].toUpperCase() + userInput[1].toUpperCase();
+    numberID = userInput.substring(2)
+
+    queryString = "";
+    // switch statement to allow queries between multiple tables
+    switch (letterID) {
+        // Memory
+        case "ME":
+            queryString = "SELECT * FROM Memory WHERE memoryID = ?";
+            break;
+    }
+    const queryResult = await connection.promise().query(queryString, [letterID + numberID]);
+    if (queryResult[0]) {
+        console.log(queryResult);
+    } else {
+        console.log("There is no match.");
+    }
 } 
 
 
