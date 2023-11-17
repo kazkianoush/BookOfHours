@@ -1,16 +1,15 @@
-const database = require('../database.js');
+const Memory = require('../models/memoryModel.js')
 
 exports.getAllMemories = (async (req, res, next) => {
-    database.runScript('SELECT * FROM Memory').then(result => {
-        res.status(200).json({
-            status: 'success',
-            data: result[0]
-          });
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-  });
+  try {
+    const [allMemories] = await Memory.getAllMemories();
+    res.status(200).json(allMemories);
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+  }
+});
   
   exports.getMemory = (async (req, res, next) => {
     res.status(200).json({

@@ -1,6 +1,6 @@
 const express = require('express'); 
 const memoryRouter = require('./router/memoryRouter.js');
-const database = require('./database.js')
+const database = require('./utils/database.js')
 
 const app = express();
 
