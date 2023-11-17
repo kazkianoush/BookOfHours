@@ -1,6 +1,9 @@
+require('dotenv').config();
 const fs = require('fs');
 const mysql = require('mysql2');
-const queries = fs.readFileSync("./CPSC304Script.sql", {encoding: 'utf8'}).toString();
+const initQueries = fs.readFileSync("./CPSC304Script.sql", {encoding: 'utf8'}).toString();
+
+
 const connection = mysql.createConnection(
     {
         host: process.env.host,
@@ -18,16 +21,15 @@ const connect = () => connection.connect(async (err) => {
         return;
     }
     console.log('Connected!');
-    runScript();
-    connection.end();
+    runScript(initQueries);
 });
 
-const runScript = async () => {
-    try {
-        await connection.promise().query(queries);
-    } catch (err) {
-        console.log("Query error: " + err.message);
-    } 
+const disconnect = () => {
+    connection.end();
 }
 
-exports.connect = connect
+const runScript = async (input) => {
+    return await connection.promise().query(input)
+}
+
+module.exports = {connect, disconnect, runScript}

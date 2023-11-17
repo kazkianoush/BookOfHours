@@ -1,27 +1,17 @@
-require('dotenv').config();
-require('./router.js')
-require('./database.js').connect();
+const express = require('express'); 
+const memoryRouter = require('./router/memoryRouter.js');
+const database = require('./database.js')
 
-const readline = require('readline');
+const app = express();
 
-app.get("/", (req, res) => {
-    res.send({ message: "Hello, nodemon!" });
-});
-  
-app.post("/api/hello", auth, (req, res) => {
-  res.status(200).send("Hello");
+const port = 3000;
+const server = app.listen(port, () => {
+  database.connect();
+  console.log(`App running on port ${port}...`);
 });
 
-// Register the application main router
-app.use("/api", router);
+app.use('/memory', memoryRouter);
+// app.use('/book', bookRouter);
 
-//     queryString = "";
-//     // switch statement to allow queries between multiple tables
-//     switch (letterID) {
-//         // Memory
-//         case "ME":
-//             queryString = "SELECT * FROM Memory WHERE memoryID = ?";
-//             break;
-//     }
-//     const queryResult = await connection.promise().query(queryString, [letterID + numberID]);
+process.on('exit', () => {database.disconnect()})
 
