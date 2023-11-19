@@ -1,7 +1,7 @@
 
 function OutputPanel() {
     return (
-        <div style={{height: "400px", width: "800px", backgroundColor: "#313338"}}>
+        <div style={{height: "40rem", width: "80rem", backgroundColor: "#313338"}}>
             This is where the output should be
         </div>
     );
