@@ -11,6 +11,11 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- Schema mydb
 -- -----------------------------------------------------
 
+-- Drop all table
+DROP TABLE IF EXISTS Memory, Item, Aspect, ElementOfTheSoul, Book, Numen, WorkshopAspectRequirement, Workstation, Skill, People, Language;
+DROP TABLE IF EXISTS Visitor, Assistant, SkillEOTS, SkillPeople, ItemSkillBook, SkillMemory;
+
+
 -- -----------------------------------------------------
 -- Table `Memory`
 -- -----------------------------------------------------
