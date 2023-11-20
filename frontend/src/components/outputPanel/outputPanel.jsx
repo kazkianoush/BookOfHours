@@ -1,11 +1,12 @@
+import React from "react";
 
-function OutputPanel() {
-    return (
-        <div style={{height: "40rem", width: "80rem", backgroundColor: "#313338"}}>
-            This is where the output should be
-        </div>
-    );
-
+function OutputPanel(props) {
+  console.log(props);
+  return (
+    <div style={{ height: "40rem", width: "80rem", backgroundColor: "#313338" }}>
+      {props.userInput}
+    </div>
+  );
 }
 
 export default OutputPanel;
