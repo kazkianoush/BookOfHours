@@ -13,3 +13,5 @@ Instruction for connecting to the server:
 3. On terminal, run `npm install` and then `node server.js`.
 
 Make sure to frequenly check `./project_info/Milestone 3 Timeline.md` to see which tasks need to be done
+
+The demo project will demonstrate book and memory tables
