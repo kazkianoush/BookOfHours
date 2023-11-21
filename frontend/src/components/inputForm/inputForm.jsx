@@ -9,11 +9,29 @@ function InputForm({ onQueryChange }) {
     onQueryChange(query);
     alert(query);
   };
+  const fetchAPI = async (e) =>{
+    e.preventDefault();
+    try{
+      const response =  fetch('http://localhost:3000/memory', { credentials: "include",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+     }});
+      // const data = await response.json();
+      // console.log(data);
+      response.then(responses => responses.json().then(data => ({
+        data: data
+      }))).then(res => 
+        console.log(res.data[0]))
+    }catch (e) {
+      console.log(e);
+    }
+  } 
 
   return (
     <div className="parent">
       <div className="col">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={fetchAPI}>
           <input
             className="input-form"
             type="text"

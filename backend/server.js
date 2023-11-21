@@ -2,9 +2,14 @@ const express = require('express');
 const memoryRouter = require('./router/memoryRouter.js');
 // const bookRouter = require('./router/bookRouter.js');
 const database = require('./utils/database.js')
+const cors = require('cors');
+
 
 const app = express();
-
+app.use(cors({
+  origin: 'http://localhost:4000',
+  credentials: true,
+}));
 const port = 3000;
 const server = app.listen(port, () => {
   database.connect();
