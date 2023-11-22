@@ -6,7 +6,7 @@ const router = express.Router();
 router
   .route('/')
   .get(memoryController.getAllMemories) 
-  // .post(memoryController.createMemory); 
+  .post(memoryController.createMemory); 
 
 router
   .route('/:id')

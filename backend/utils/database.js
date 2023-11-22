@@ -21,15 +21,11 @@ const connect = () => connection.connect(async (err) => {
         return;
     }
     console.log('Connected!');
-    runScript(initQueries);
+    connection.query(initQueries)
 });
 
 const disconnect = () => {
     connection.end();
 }
 
-const runScript = async (input) => {
-    return await connection.promise().query(input)
-}
-
-module.exports = {connect, disconnect, runScript}
+module.exports = {connect, disconnect, connection}
