@@ -4,7 +4,7 @@ SCRIPT GOES HERE!!
 
 const database = require('../utils/database.js').connection;
 
-class Memory {  
+class MemoryModel {  
     static getAllMemories() {
       return database.promise().query('SELECT * FROM Memory');
     }
@@ -26,4 +26,4 @@ class Memory {
     // }
 };
 
-module.exports = Memory
+module.exports = MemoryModel
