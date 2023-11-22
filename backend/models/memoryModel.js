@@ -2,15 +2,19 @@
 SCRIPT GOES HERE!!
 */
 
-const database = require('../utils/database.js');
+const database = require('../utils/database.js').connection;
 
-class Grocery {  
+class Memory {  
     static getAllMemories() {
-      return database.runScript('SELECT * FROM Memory');
+      return database.promise().query('SELECT * FROM Memory');
+    }
+
+    static getMemory(name) {
+      return database.promise().query('SELECT * FROM Memory WHERE memoryName = ?', [name]);
     }
   
     // static post(item) {
-    //   return database.execute('INSERT INTO groceries (item) VALUES (?)', [item]);
+    //   return database.promise().query('INSERT INTO Memory (item) VALUES (?)', [item]);
     // }
   
     // static update(id, item) {
@@ -22,4 +26,4 @@ class Grocery {
     // }
 };
 
-module.exports = Grocery
+module.exports = Memory
