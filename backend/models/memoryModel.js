@@ -9,12 +9,12 @@ class Memory {
       return database.promise().query('SELECT * FROM Memory');
     }
 
-    static getMemory(id) {
-      return database.promise().query('SELECT * FROM Memory WHERE memoryID = ?', [id]);
+    static getMemory(name) {
+      return database.promise().query('SELECT * FROM Memory WHERE memoryName = ?', [name]);
     }
   
     // static post(item) {
-    //   return database.execute('INSERT INTO groceries (item) VALUES (?)', [item]);
+    //   return database.promise().query('INSERT INTO Memory (item) VALUES (?)', [item]);
     // }
   
     // static update(id, item) {

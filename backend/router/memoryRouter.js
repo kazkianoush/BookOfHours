@@ -9,7 +9,7 @@ router
   .post(memoryController.createMemory); 
 
 router
-  .route('/:id')
+  .route('/:name')
   .get(memoryController.getMemory) 
   // .patch(memoryController.updateMemory) 
   // .delete(memoryController.deleteMemory); 
