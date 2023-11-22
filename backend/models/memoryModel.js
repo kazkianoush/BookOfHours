@@ -4,7 +4,7 @@ SCRIPT GOES HERE!!
 
 const database = require('../utils/database.js');
 
-class Grocery {  
+class MemoryModel {  
     static getAllMemories() {
       return database.runScript('SELECT * FROM Memory');
     }
@@ -22,4 +22,4 @@ class Grocery {
     // }
 };
 
-module.exports = Grocery
+module.exports = MemoryModel

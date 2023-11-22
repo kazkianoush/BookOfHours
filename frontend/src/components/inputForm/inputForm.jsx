@@ -6,17 +6,27 @@ function InputForm({ onQueryChange }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onQueryChange(query);
-    alert(query);
+    console.log(query);
+    fetchAPI(e);
+    
   };
   const fetchAPI = async (e) =>{
     e.preventDefault();
     try{
-      const response =  fetch('http://localhost:3000/memory', { credentials: "include",
+      const response =  fetch('http://localhost:3000/memory', { 
+      credentials: "include",
+      
+      method: "POST",
+
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-     }});
+     },
+
+      body: {query: query}
+    
+    
+    });
       // const data = await response.json();
       // console.log(data);
       response.then(responses => responses.json().then(data => ({
@@ -25,13 +35,14 @@ function InputForm({ onQueryChange }) {
         console.log(res.data[0]))
     }catch (e) {
       console.log(e);
+
     }
   } 
 
   return (
     <div className="parent">
       <div className="col">
-        <form onSubmit={fetchAPI}>
+        <form onSubmit={handleSubmit}>
           <input
             className="input-form"
             type="text"
