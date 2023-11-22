@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./styles.css";
 
-function InputForm({ onQueryChange }) {
+function InputForm() {
   const [query, setQuery] = useState("");
 
   const handleSubmit = (e) => {
@@ -13,26 +13,27 @@ function InputForm({ onQueryChange }) {
   const fetchAPI = async (e) =>{
     e.preventDefault();
     try{
-      const response =  fetch('http://localhost:3000/memory', { 
+      const response =  fetch(`http://localhost:3000/memory/${query}`, { 
       credentials: "include",
       
-      method: "POST",
+      method: "GET",
 
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
      },
-
-      body: {query: query}
-    
     
     });
       // const data = await response.json();
       // console.log(data);
       response.then(responses => responses.json().then(data => ({
         data: data
-      }))).then(res => 
-        console.log(res.data[0]))
+      }))).then(res => {
+
+        console.log(res.data.length);
+        console.log(res.data);
+        }
+      )
     }catch (e) {
       console.log(e);
 

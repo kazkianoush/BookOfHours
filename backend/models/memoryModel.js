@@ -10,7 +10,7 @@ class MemoryModel {
     }
 
     static getMemory(name) {
-      return database.promise().query('SELECT * FROM Memory WHERE memoryName = ?', [name]);
+      return database.promise().query("SELECT * FROM Memory WHERE memoryName = ? OR memoryName LIKE ?", [name, `%${name}%`]);
     }
   
     // static post(item) {
