@@ -1,10 +1,9 @@
-// const Memory = require('../models/memoryModel.js')
-
-const database = require('../utils/database.js').connection;
+const Memory = require('../models/memoryModel.js')
 
 exports.getAllMemories = (async (req, res, next) => {
   try {
-    const [allMemories] = await database.promise().query('SELECT * FROM Memory');
+    // const [allMemories] = await database.promise().query('SELECT * FROM Memory');
+    const [allMemories] = await Memory.getAllMemories();
     res.status(200).json(allMemories);
   } catch (err) {
     if (!err.statusCode) {
@@ -15,7 +14,7 @@ exports.getAllMemories = (async (req, res, next) => {
   
 exports.getMemory = (async (req, res, next) => {
   try {
-    const [memory] = await database.promise().query('SELECT * FROM Memory WHERE memoryID = ?', [req.params.id]);
+    const [memory] = await Memory.getMemory(req.params.id);
     res.status(200).json(memory);
 } catch (err) {
   if (!err.statusCode) {
@@ -25,21 +24,21 @@ exports.getMemory = (async (req, res, next) => {
 });
   
 exports.createMemory = (async (req, res, next) => {
-  try {
-    const body = await request.body({ type: 'json' });
-    const requestBody = await body.value;
-    console.log(requestBody.task);
-    let newTodo: Todo = {
-        task: requestBody.task
-    };
-    console.log(newTodo);
-    await todos.create(newTodo);
-    response.status = 200;
-  } catch (err) {
-    if (!err.statusCode) {
-      err.statusCode = 500;
-    }
-  }
+  // try {
+  //   const body = await request.body({ type: 'json' });
+  //   const requestBody = await body.value;
+  //   console.log(requestBody.task);
+  //   let newTodo = {
+  //       task: requestBody.task
+  //   };
+  //   console.log(newTodo);
+  //   await Memory.create(newTodo);
+  //   response.status = 200;
+  // } catch (err) {
+  //   if (!err.statusCode) {
+  //     err.statusCode = 500;
+  //   }
+  // }
 });
   
   exports.updateMemory = (async (req, res, next) => {

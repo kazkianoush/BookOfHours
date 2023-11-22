@@ -2,17 +2,15 @@
 SCRIPT GOES HERE!!
 */
 
-const database = require('../utils/database.js');
+const database = require('../utils/database.js').connection;
 
 class Memory {  
-    async getAllMemories() {
-      const [allMemories] = await database.connection.query('SELECT * FROM Memory');
-      console.log(allMemories)
-      return allMemories;
+    static getAllMemories() {
+      return database.promise().query('SELECT * FROM Memory');
     }
 
-    async getMemory(id) {
-      return await database.promise().query('SELECT * FROM Memory WHERE memoryID = ?', [id]);
+    static getMemory(id) {
+      return database.promise().query('SELECT * FROM Memory WHERE memoryID = ?', [id]);
     }
   
     // static post(item) {
