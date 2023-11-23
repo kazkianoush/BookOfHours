@@ -11,9 +11,9 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- Schema mydb
 -- -----------------------------------------------------
 
--- Drop all table
-DROP TABLE IF EXISTS Memory, Item, Aspect, ElementOfTheSoul, Book, Numen, WorkshopAspectRequirement, Workstation, Skill, People, Language;
-DROP TABLE IF EXISTS Visitor, Assistant, SkillEOTS, SkillPeople, ItemSkillBook, SkillMemory;
+-- -- Drop all table
+-- DROP TABLE IF EXISTS Memory, Item, Aspect, ElementOfTheSoul, Book, Numen, WorkshopAspectRequirement, Workstation, Skill, People, Language;
+-- DROP TABLE IF EXISTS Visitor, Assistant, SkillEOTS, SkillPeople, ItemSkillBook, SkillMemory;
 
 
 -- -----------------------------------------------------
@@ -78,26 +78,28 @@ CREATE TABLE IF NOT EXISTS `Book` (
   `bookID` VARCHAR(20) NOT NULL,
   `bookName` VARCHAR(80) NULL,
   `language` VARCHAR(20) NULL,
+  `aspectID` VARCHAR(20) NULL,
+  `memoryID` VARCHAR(20) NULL,
+  `elementOfTheSoulID` VARCHAR(20) NULL,
+  `numenID` VARCHAR(20) NULL,
   PRIMARY KEY (`bookID`),
   UNIQUE INDEX `bookName_UNIQUE` (`bookName` ASC) VISIBLE,
-    FOREIGN KEY (`bookID`)
+    FOREIGN KEY (`aspectID`)
 		REFERENCES `Aspect` (`aspectID`)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE,
-    FOREIGN KEY (`bookID`)
+    FOREIGN KEY (`memoryID`)
 		REFERENCES `Memory` (`memoryID`)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE,
-    FOREIGN KEY (`bookID`)
+    FOREIGN KEY (`elementOfTheSoulID`)
 		REFERENCES `ElementOfTheSoul` (`elementOfTheSoulID`)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE,
-    FOREIGN KEY (`bookID`)
+    FOREIGN KEY (`numenID`)
 		REFERENCES `Numen` (`numenID`)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE)
-ENGINE = InnoDB;
-
 
 -- -----------------------------------------------------
 -- Table `Numen`
@@ -503,6 +505,15 @@ INSERT IGNORE INTO Memory(memoryID, memoryName, memorySources, memoryIsSound, me
 VALUES ('ME064', 'Nume-Brume', 'Guaranteed in Numa', 0, 0, 0, 1);
 
 -- Book
-
 INSERT IGNORE INTO Book(bookID, bookName, language, aspectID, memoryID, elementOfTheSoulID, numenID)
-VALUES ('BK001', 'The War of the Roads, 1451-1551', NULL, NULL, 'ME007', NULL, NULL)
+VALUES ('BK001', 'The War of the Roads, 1451-1551', NULL, NULL, 'ME007', NULL, NULL);
+
+INSERT INTO Book VALUES('BK002', 'De Horis Book 2','LATIN', NULL, 'ME007', NULL, NULL);
+
+INSERT INTO Book VALUES('BK003', 'De Horis Book 3','LATIN', NULL, 'ME006', NULL, NULL);
+
+INSERT INTO Book VALUES('BK004', 'The Sun''s Lament','', NULL, 'ME018', NULL, NULL);
+
+INSERT INTO Book VALUES('BK005', 'The Victory Of Crowns','', NULL, 'ME006', NULL, NULL);
+
+INSERT INTO Book VALUES('BK006', 'The Book of Thrones','', NULL, 'ME006', NULL, NULL);
