@@ -9,7 +9,7 @@ router
   // .post(bookController.createBook); 
 
 router
-  .route('/:id')
+  .route('/:name')
   .get(bookController.getBook) 
   // .patch(bookController.updateBook) 
   // .delete(bookController.deleteBook); 

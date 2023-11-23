@@ -501,3 +501,8 @@ VALUES ('ME063', 'Snow', 'Random draw on new day, only in Winter', 0, 0, 0, 1);
 
 INSERT IGNORE INTO Memory(memoryID, memoryName, memorySources, memoryIsSound, memoryIsOmen, memoryIsPersistent, memoryIsWeather)
 VALUES ('ME064', 'Nume-Brume', 'Guaranteed in Numa', 0, 0, 0, 1);
+
+-- Book
+
+INSERT IGNORE INTO Book(bookID, bookName, language, aspectID, memoryID, skillID, numenID, elementOfTheSoulID)
+VALUES ('BK001', 'The War of the Roads, 1451-1551', NULL, 'AS001', 'ME007', NULL, NULL, NULL)

@@ -1,6 +1,6 @@
 const express = require('express'); 
 const memoryRouter = require('./router/memoryRouter.js');
-// const bookRouter = require('./router/bookRouter.js');
+const bookRouter = require('./router/bookRouter.js');
 const database = require('./utils/database.js')
 const cors = require('cors');
 
@@ -17,7 +17,7 @@ const server = app.listen(port, () => {
 });
 
 app.use('/memory', memoryRouter);
-// app.use('/book', bookRouter);
+app.use('/book', bookRouter);
 
 process.on('exit', () => {database.disconnect()})
 
