@@ -1,5 +1,6 @@
 const Book = require("../models/bookModel");
- 
+const database = require('../utils/database.js').connection;
+
 
 exports.getAllBooks = (async (req, res, next) => {
   try {
@@ -25,15 +26,18 @@ exports.getBook = (async (req, res, next) => {
   
 exports.createBook = (async (req, res, next) => {
   try {
-    const body = await request.body({ type: 'json' });
-    const requestBody = await body.value;
-    console.log(requestBody.task);
-    let newTodo = {
-        task: requestBody.task
+    let newBook = {
+      bookName: req.body.bookName,
+      language: req.body.language,
+      memoryID: req.body.memoryID, 
     };
-    console.log(newTodo);
-    await Book.create(newTodo);
-    response.status = 200;
+    const [bookExists] = await Book.getBook(newBook.bookName)
+    if (!bookExists.length) {
+      await Book.post(newBook);
+      res.status(201).json(bookExists);
+    } else {
+      res.status(409);
+    }
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;

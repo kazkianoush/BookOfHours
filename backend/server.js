@@ -1,13 +1,17 @@
 const express = require('express'); 
+const bodyParser = require('body-parser');
+const cors = require('cors');
+
 const memoryRouter = require('./router/memoryRouter.js');
 const bookRouter = require('./router/bookRouter.js');
 const database = require('./utils/database.js')
-const cors = require('cors');
-
 
 const app = express();
+
+app.use(bodyParser.json());
+
 app.use(cors({
-  origin: 'http://localhost:4000',
+  origin: 'http://localhost',
   credentials: true,
 }));
 const port = 3000;
