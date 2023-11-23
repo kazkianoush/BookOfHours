@@ -504,5 +504,5 @@ VALUES ('ME064', 'Nume-Brume', 'Guaranteed in Numa', 0, 0, 0, 1);
 
 -- Book
 
-INSERT IGNORE INTO Book(bookID, bookName, language, aspectID, memoryID, skillID, numenID, elementOfTheSoulID)
-VALUES ('BK001', 'The War of the Roads, 1451-1551', NULL, 'AS001', 'ME007', NULL, NULL, NULL)
+INSERT IGNORE INTO Book(bookID, bookName, language, aspectID, memoryID, elementOfTheSoulID, numenID)
+VALUES ('BK001', 'The War of the Roads, 1451-1551', NULL, NULL, 'ME007', NULL, NULL)
