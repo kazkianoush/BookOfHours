@@ -1,14 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./styles.css";
 
-function InputForm(props) {
+function InputForm({onItemsChange}) {
   const [query, setQuery] = useState("");
+  const [items, setItems] = useState([])
 
+
+  useEffect(() => {
+    console.log("Items updated:", items);
+    onItemsChange(items)
+  }, [items]); 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(query);
     fetchAPI(e);
-    
   };
   const fetchAPI = async (e) =>{
     e.preventDefault();
@@ -32,7 +37,8 @@ function InputForm(props) {
 
         console.log(res.data.length);
         console.log(res.data);
-        props.setData(res.data);
+        
+        setItems(res.data);
         }
       )
     }catch (e) {
