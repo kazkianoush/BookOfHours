@@ -3,12 +3,7 @@ import InputForm from "../inputForm/inputForm";
 import OutputPanel from "../outputPanel/outputPanel";
 
 function Display() {
-  // const [submittedQuery, setSubmittedQuery] = useState("");
   const [data, setData] = useState("");
-
-  // const handleQueryChange = (newQuery) => {
-  //   setSubmittedQuery(newQuery);
-  // };
 
   return (
     <>
