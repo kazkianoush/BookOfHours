@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./styles.css";
 
-function InputForm() {
+function InputForm(props) {
   const [query, setQuery] = useState("");
 
   const handleSubmit = (e) => {
@@ -32,6 +32,7 @@ function InputForm() {
 
         console.log(res.data.length);
         console.log(res.data);
+        props.setData(res.data);
         }
       )
     }catch (e) {

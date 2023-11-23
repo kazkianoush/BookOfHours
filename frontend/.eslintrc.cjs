@@ -13,6 +13,7 @@ module.exports = {
   plugins: ['react'],
   rules: {
     "react/jsx-uses-vars": "error",
-    "react/jsx-uses-react": "error"
+    "react/jsx-uses-react": "error",
+    "react/prop-types": "off"
   },
 }
