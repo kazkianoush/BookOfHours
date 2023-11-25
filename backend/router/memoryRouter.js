@@ -10,8 +10,12 @@ router
 
 router
   .route('/:name')
-  .get(memoryController.getMemory) 
+  .get(memoryController.getMemoryByName) 
   // .patch(memoryController.updateMemory) 
   // .delete(memoryController.deleteMemory); 
 
+router
+  .route('/:id')
+  .get(memoryController.getMemoryByID)
+  
 module.exports = router;

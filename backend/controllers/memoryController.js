@@ -12,9 +12,20 @@ exports.getAllMemories = (async (req, res, next) => {
   }
 });
   
-exports.getMemory = (async (req, res, next) => {
+exports.getMemoryByName = (async (req, res, next) => {
   try {
-    const [memory] = await Memory.getMemory(req.params.name);
+    const [memory] = await Memory.getMemoryByName(req.params.name);
+    res.status(200).json(memory);
+} catch (err) {
+  if (!err.statusCode) {
+    err.statusCode = 500;
+  }
+}
+});
+
+exports.getMemoryByID = (async (req, res, next) => {
+  try {
+    const [memory] = await Memory.getMemoryByID(req.params.id);
     res.status(200).json(memory);
 } catch (err) {
   if (!err.statusCode) {

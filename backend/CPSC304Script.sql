@@ -379,7 +379,7 @@ VALUES ('ME001', 'Memory: Taste', 'Considering sustenance and beverages', 0, 0, 
          ('ME064', 'Nume-Brume', 'Guaranteed in Numa', 0, 0, 0, 1);
 
 -- Book
--- INSERT IGNORE INTO Book(bookID, bookName, language, aspectID, memoryID, elementOfTheSoulID, numenID)
+-- INSERT IGNORE INTO Book(bookID, bookName, `language`, aspectID, memoryID, elementOfTheSoulID, numenID)
 -- VALUES ('BK001', 'The War of the Roads, 1451-1551', NULL, NULL, 'ME007', NULL, NULL);
 
 -- INSERT INTO Book VALUES('BK002', 'De Horis Book 2','LATIN', NULL, 'ME007', NULL, NULL);
@@ -391,3 +391,30 @@ VALUES ('ME001', 'Memory: Taste', 'Considering sustenance and beverages', 0, 0, 
 -- INSERT INTO Book VALUES('BK005', 'The Victory Of Crowns','', NULL, 'ME006', NULL, NULL);
 
 -- INSERT INTO Book VALUES('BK006', 'The Book of Thrones','', NULL, 'ME006', NULL, NULL);
+
+-- CREATE TABLE IF NOT EXISTS `Book` (
+--   `bookID` VARCHAR(20) NOT NULL,
+--   `bookName` VARCHAR(80) NULL,
+--   `language` VARCHAR(20) NULL,
+--   `aspectID` VARCHAR(20) NULL,
+--   `memoryID` VARCHAR(20) NULL,
+--   `elementOfTheSoulID` VARCHAR(20) NULL,
+--   `numenID` VARCHAR(20) NULL,
+--   PRIMARY KEY (`bookID`),
+--   UNIQUE INDEX `bookName_UNIQUE` (`bookName` ASC) VISIBLE,
+--     FOREIGN KEY (`aspectID`)
+-- 		REFERENCES `Aspect` (`aspectID`)
+-- 		ON DELETE CASCADE
+-- 		ON UPDATE CASCADE,
+--     FOREIGN KEY (`memoryID`)
+-- 		REFERENCES `Memory` (`memoryID`)
+-- 		ON DELETE CASCADE
+-- 		ON UPDATE CASCADE,
+--     FOREIGN KEY (`elementOfTheSoulID`)
+-- 		REFERENCES `ElementOfTheSoul` (`elementOfTheSoulID`)
+-- 		ON DELETE CASCADE
+-- 		ON UPDATE CASCADE,
+--     FOREIGN KEY (`numenID`)
+-- 		REFERENCES `Numen` (`numenID`)
+-- 		ON DELETE CASCADE
+-- 		ON UPDATE CASCADE)

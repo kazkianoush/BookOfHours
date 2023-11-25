@@ -1,5 +1,4 @@
 const Book = require("../models/bookModel");
-const database = require('../utils/database.js').connection;
 
 
 exports.getAllBooks = (async (req, res, next) => {
