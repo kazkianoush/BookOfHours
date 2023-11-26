@@ -11,9 +11,9 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- Schema mydb
 -- -----------------------------------------------------
 
--- -- Drop all table
--- DROP TABLE IF EXISTS Memory, Item, Aspect, ElementOfTheSoul, Book, Numen, WorkshopAspectRequirement, Workstation, Skill, People, Language;
--- DROP TABLE IF EXISTS Visitor, Assistant, SkillEOTS, SkillPeople, ItemSkillBook, SkillMemory;
+-- Drop all table
+DROP TABLE IF EXISTS Memory, Item, Aspect, ElementOfTheSoul, Book, Numen, WorkshopAspectRequirement, Workstation, Skill, People, Language;
+DROP TABLE IF EXISTS Visitor, Assistant, SkillEOTS, SkillPeople, ItemSkillBook, SkillMemory;
 
 
 -- -----------------------------------------------------
@@ -100,6 +100,7 @@ CREATE TABLE IF NOT EXISTS `Book` (
 		REFERENCES `Numen` (`numenID`)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE)
+	ENGINE = InnoDB;
 
 -- -----------------------------------------------------
 -- Table `Numen`
@@ -303,9 +304,9 @@ ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+-- SET SQL_MODE=@OLD_SQL_MODE;
+-- SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+-- SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 -- -----------------------------------------------------
 -- Adding Data
@@ -379,42 +380,105 @@ VALUES ('ME001', 'Memory: Taste', 'Considering sustenance and beverages', 0, 0, 
          ('ME064', 'Nume-Brume', 'Guaranteed in Numa', 0, 0, 0, 1);
 
 -- Book
--- INSERT IGNORE INTO Book(bookID, bookName, `language`, aspectID, memoryID, elementOfTheSoulID, numenID)
--- VALUES ('BK001', 'The War of the Roads, 1451-1551', NULL, NULL, 'ME007', NULL, NULL);
-
--- INSERT INTO Book VALUES('BK002', 'De Horis Book 2','LATIN', NULL, 'ME007', NULL, NULL);
-
--- INSERT INTO Book VALUES('BK003', 'De Horis Book 3','LATIN', NULL, 'ME006', NULL, NULL);
-
--- INSERT INTO Book VALUES('BK004', 'The Sun''s Lament','', NULL, 'ME018', NULL, NULL);
-
--- INSERT INTO Book VALUES('BK005', 'The Victory Of Crowns','', NULL, 'ME006', NULL, NULL);
-
--- INSERT INTO Book VALUES('BK006', 'The Book of Thrones','', NULL, 'ME006', NULL, NULL);
-
--- CREATE TABLE IF NOT EXISTS `Book` (
---   `bookID` VARCHAR(20) NOT NULL,
---   `bookName` VARCHAR(80) NULL,
---   `language` VARCHAR(20) NULL,
---   `aspectID` VARCHAR(20) NULL,
---   `memoryID` VARCHAR(20) NULL,
---   `elementOfTheSoulID` VARCHAR(20) NULL,
---   `numenID` VARCHAR(20) NULL,
---   PRIMARY KEY (`bookID`),
---   UNIQUE INDEX `bookName_UNIQUE` (`bookName` ASC) VISIBLE,
---     FOREIGN KEY (`aspectID`)
--- 		REFERENCES `Aspect` (`aspectID`)
--- 		ON DELETE CASCADE
--- 		ON UPDATE CASCADE,
---     FOREIGN KEY (`memoryID`)
--- 		REFERENCES `Memory` (`memoryID`)
--- 		ON DELETE CASCADE
--- 		ON UPDATE CASCADE,
---     FOREIGN KEY (`elementOfTheSoulID`)
--- 		REFERENCES `ElementOfTheSoul` (`elementOfTheSoulID`)
--- 		ON DELETE CASCADE
--- 		ON UPDATE CASCADE,
---     FOREIGN KEY (`numenID`)
--- 		REFERENCES `Numen` (`numenID`)
--- 		ON DELETE CASCADE
--- 		ON UPDATE CASCADE)
+INSERT IGNORE INTO Book(bookID, bookName, `language`, aspectID, memoryID, elementOfTheSoulID, numenID)
+VALUES ('BK001', 'The War of the Roads, 1451-1551', NULL, NULL, 'ME007', NULL, NULL),
+       ('BK002', 'De Horis Book 2','LATIN', NULL, 'ME007', NULL, NULL),
+       ('BK003', 'De Horis Book 3','LATIN', NULL, 'ME006', NULL, NULL),
+       ('BK004', 'The Sun''s Lament',NULL, NULL, 'ME018', NULL, NULL),
+       ('BK005', 'The Victory Of Crowns',NULL, NULL, 'ME006', NULL, NULL),
+       ('BK006', 'De Bellis Murorum',NULL, NULL, 'ME006', NULL, NULL),
+       ('BK007', 'Exorcism for Girls', NULL, NULL, 'ME018', NULL, NULL),
+       ('BK008', 'The High Traditions of the Noble Endeavour', 'Latin', NULL, 'ME007', NULL, NULL),
+       ('BK009', 'The Iron Book', 'Fucine', NULL, 'ME007', NULL, NULL),
+       ('BK010', 'The Open Head', 'Hyksos/Film', NULL, 'ME013', NULL, NULL),
+       ('BK011', 'The Leonine Tantra', NULL, NULL, 'ME007', NULL, NULL),
+       ('BK012', 'As The Sun His Course', NULL, NULL, 'ME006', NULL, NULL),
+       ('BK013', 'The Ascendant', 'Hyksos', NULL, 'ME006', NULL, NULL),
+       ('BK014', 'Seven Shards', NULL, NULL, 'ME020', NULL, NULL),
+       ('BK015', 'The Sky in the Scar', NULL, NULL, 'ME051', NULL, NULL),
+       ('BK016', 'A Child''s Treasure of Golden Afternoons', 'Hyksos', NULL, 'ME049', NULL, NULL),
+       ('BK017', 'The Book of Thrones', NULL, NULL, 'ME006', NULL, NULL),
+       ('BK018', 'The Deeds of Scarred Captain', NULL, NULL, 'ME018', NULL, NULL),
+       ('BK019', 'Book of True Blood', NULL, NULL, 'ME018', NULL, NULL),
+       ('BK020', 'How the End will Begin', NULL, NULL, 'ME018', NULL, NULL),
+       ('BK021', 'The Sevenfold Slaying of the Seven-Coiled', 'Fucine', NULL, 'ME018', NULL, NULL),
+       ('BK022', 'The Wound-Wounds', 'Killasimi', NULL, 'ME019', NULL, NULL),
+       ('BK023', 'Vinzant''s Minglings', NULL, NULL, 'ME007', NULL, NULL),
+       ('BK024', 'The Kindled Flame', NULL, NULL, 'ME007', NULL, NULL),
+       ('BK025', 'Sunset''s Passage', 'Latin', NULL, 'ME013', NULL, NULL),
+       ('BK026', 'The Book of Cinders', NULL, NULL, 'ME007', NULL, NULL),
+       ('BK027', 'Journal of Walter Dewulf', NULL, NULL, 'ME007', NULL, NULL),
+       ('BK028', 'The Vinzant Inscriptions', NULL, NULL, 'ME007', NULL, NULL),
+       ('BK029', 'On Matthias an the Amethyst Imago: Transformation', 'Aramaic', NULL, 'ME016', NULL, NULL),
+       ('BK030', 'The Amalgam of the Red Rose', NULL, NULL, 'ME007', NULL, NULL),
+       ('BK031', 'The Incandescent Tantra', NULL, NULL, 'ME007', NULL, NULL),
+       ('BK032', 'A Shape In Smoke', NULL, NULL, 'ME013', NULL, NULL),
+       ('BK033', 'Old Coppernose And The Softer Metal', NULL, NULL, 'ME007', NULL, NULL),
+       ('BK034', 'Ambrosial', NULL, NULL, 'ME016', NULL, NULL),
+       ('BK035', 'The Temptations of Architecture', NULL, NULL, 'ME021', NULL, NULL),
+       ('BK036', 'Skin of Silver', 'Deep Mandaic', NULL, 'ME018', NULL, NULL),
+       ('BK037', 'The Admonitory Automata Project', 'Film', NULL, 'ME007', NULL, NULL),
+       ('BK038', 'Glimmerings', NULL, NULL, 'ME027', NULL, NULL),
+       ('BK039', 'Amiranis Beteli', 'Fucine', NULL, 'ME050', NULL, NULL),
+       ('BK040', 'The Carmine Petal: Revised', 'Fucine', NULL, 'ME007', NULL, NULL),
+       ('BK041', 'The Book of Dissolution', 'Deep Mandaic', NULL, 'ME007', NULL, NULL),
+       ('BK042', 'A Descent of the Shell', NULL, NULL, 'ME007', NULL, NULL),
+       ('BK043', 'The Manner in which the Alchemist was Spared', 'Vak', NULL, 'ME007', NULL, NULL),
+       ('BK044', 'The Burning Woman', NULL, NULL, 'ME007', NULL, NULL),
+       ('BK045', 'My Deeds, My Powers, My Achievements And the Injustices Perpetrated Against Me', 'Deep Mandaic', NULL, 'ME007', NULL, NULL),
+       ('BK046', 'The Messenger Awaiting Her Destination', 'Vak', NULL, 'ME012', NULL, NULL),
+       ('BK047', 'The Carmine Petal: Unexpurgated', NULL, NULL, 'ME007', NULL, NULL),
+       ('BK048', 'The Wind''Ruin', NULL, NULL, 'ME023', NULL, NULL),
+       ('BK049', 'The Orchic Transfigurations: A Feast', 'Latin', NULL, 'ME015', NULL, NULL),
+       ('BK050', 'The Skeleton Song', NULL, NULL, 'ME023', NULL, NULL),
+       ('BK051', 'The Tripled Heart', 'Kernewek Henavek', NULL, 'ME015', NULL, NULL),
+       ('BK052', 'The Devoured Tantra', 'Sanskrit', NULL, 'ME022', NULL, NULL),
+       ('BK053', 'An Impertinent Vitulation', NULL, NULL, 'ME008', NULL, NULL),
+       ('BK054', 'Colours in The Liver', NULL, NULL, 'ME013', NULL, NULL),
+       ('BK055', 'On Matthias And the Amethyst Imago: Pursuit', 'Aramaic', NULL, 'ME017', NULL, NULL),
+       ('BK056', 'The Orchid Transfigurations: A Birth', 'Latin', NULL, 'ME008', NULL, NULL),
+       ('BK057', 'The Imitation of Skin', NULL, NULL, 'ME023', NULL, NULL),
+       ('BK058', 'Snare of the Tree: Collected Proverbs of Aunt Mopsy', NULL, NULL, 'ME022', NULL, NULL),
+       ('BK059', 'The Thirsting Tantra', NULL, NULL, 'ME008', NULL, NULL),
+       ('BK060', 'Calicite Supplications', NULL, NULL, 'ME008', NULL, NULL),
+       ('BK061', 'On Thirstlies, Ivories And Lovelies', NULL, NULL, 'ME016', NULL, NULL),
+       ('BK062', 'The Wonderful Shape', 'Killasimi', NULL, 'ME008', NULL, NULL),
+       ('BK063', 'A Journey to the Grove', NULL, NULL, 'ME008', NULL, NULL),
+       ('BK064', 'The Rose of Nuriel', 'Greek', NULL, 'ME008', NULL, NULL),
+       ('BK065', 'The Geminiad II', 'Fucine', NULL, 'ME008', NULL, NULL),
+       ('BK066', 'The Sun Disfigured', 'Cracktrack', NULL, 'ME045', NULL, NULL),
+       ('BK067', 'One Thousand Threads', NULL, NULL, 'ME018', NULL, NULL),
+       ('BK068', 'A Catalogue of Uncharted Pleasures', NULL, NULL, 'ME008', NULL, NULL),
+       ('BK069', 'Twenty-Six Enticements, Seven Torments', 'Fucine', NULL, 'ME016', NULL, NULL),
+       ('BK070', 'The Dream Of The Conspiracy of the Lower Skies', 'Phrygian', NULL, 'ME017', NULL, NULL),
+       ('BK071', 'Medusan Commentaries', NULL, NULL, 'ME018', NULL, NULL),
+       ('BK072', 'Apollo and Marsyas', NULL, NULL, 'ME010', NULL, NULL),
+       ('BK073', 'The Orchid Transfigurations: Noon', NULL, NULL, 'ME009', NULL, NULL),
+       ('BK074', 'The Other Line', NULL, NULL, 'ME022', NULL, NULL),
+       ('BK075', 'A True And Complete Account of the Asclepian Mysteries of the Roots of the House', 'Greek', NULL, 'ME016', NULL, NULL),
+       ('BK076', 'The Ceaseless Tantra', NULL, NULL, 'ME016', NULL, NULL),
+       ('BK077', 'Velletri Interviews', 'Phonograph', NULL, 'ME014', NULL, NULL),
+       ('BK078', 'Rapt in the King', NULL, NULL, 'ME028', NULL, NULL),
+       ('BK079', 'Warming Draughts to Uplift the Heart', NULL, NULL, 'ME016', NULL, NULL),
+       ('BK080', 'Two Wombs, One Heart', 'Killasimi', NULL, 'ME008', NULL, NULL),
+       ('BK081', 'The Flayed Tantra', 'Sanskrit', NULL, 'ME010', NULL, NULL),
+       ('BK082', 'The Geminiad I', 'Fucine', NULL, 'ME009', NULL, NULL),
+       ('BK083', 'Notes on Bindings', NULL, NULL, 'ME009', NULL, NULL),
+       ('BK084', 'The Instruments of the Heart', NULL, NULL, 'ME024', NULL, NULL),
+       ('BK085', 'Those Who Do Not Sleep', 'Fucine', NULL, 'ME010', NULL, NULL),
+       ('BK086', 'Lake Fucino Recordings', NULL, NULL, 'ME023', NULL, NULL),
+       ('BK087', 'Commandments for the Perservation of All that Exists', 'Deep Mandaic', NULL, 'ME008', NULL, NULL),
+       ('BK088', 'The Time of Division', 'Deep Mandaic', NULL, 'ME012', NULL, NULL),
+       ('BK089', 'Nyn''s Cages (Avignon Text)', 'Ericapaean', NULL, 'ME020', NULL, NULL),
+       ('BK090', 'The Book of the Extinguished Heart', 'Deep Mandaic', NULL, 'ME027', NULL, NULL),
+       ('BK091', 'Travelling At Night, Vol 1', NULL, NULL, 'ME016', NULL, NULL),
+       ('BK092', 'Travelling At Night, Vol 3', NULL, NULL, 'ME012', NULL, NULL),
+       ('BK093', 'The Treatise On Underplaces', NULL, NULL, 'ME018', NULL, NULL),
+       ('BK094', 'The Raptures of Forculus', 'Latin', NULL, 'ME012', NULL, NULL),
+       ('BK095', 'Advice of Containment', NULL, NULL, 'ME012', NULL, NULL),
+       ('BK096', 'The Elations on Limentinus', 'Latin', NULL, 'ME012', NULL, NULL),
+       ('BK097', 'The Locksmith''s Dream: Trespasses', NULL, NULL, 'ME016', NULL, NULL),
+       ('BK098', 'By Their Marks Shall Ye Know Them', NULL, NULL, 'ME012', NULL, NULL),
+       ('BK099', 'The Gospel of Zacchaeus', 'Greek', NULL, 'ME014', NULL, NULL),
+       ('BK100', 'Cardea''s Delights', 'Latin', NULL, 'ME012', NULL, NULL);
+       
