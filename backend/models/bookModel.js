@@ -15,8 +15,12 @@ class BookModel {
       return database.promise().query(query, [name, `%${name}%`]);
     }
 
-    static getBook(name) {
+    static getBookByName(name) {
       return database.promise().query('SELECT * FROM Book WHERE bookName = ? OR bookName LIKE ?', [name, `%${name}%`]);
+    }
+
+    static getBookByID(ID) {
+      return database.promise().query('SELECT * FROM Book WHERE bookID = ?', [ID]);
     }
   
     static async post(input) {

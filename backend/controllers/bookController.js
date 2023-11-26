@@ -26,7 +26,7 @@ exports.getBookName = (async (req, res, next) => {
     if (req.query.selectedColumns) {
       [book] = await Book.getBookProjection(req.params.name, req.query.selectedColumns);
     } else {
-      [book] = await Book.getBook(req.params.name);
+      [book] = await Book.getBookByName(req.params.name);
     }
     res.status(200).json(book);
 } catch (err) {
@@ -36,23 +36,19 @@ exports.getBookName = (async (req, res, next) => {
 }
 });
 
-// exports.getBookID = (async (req, res, next) => {
-//   try {
-//     let book = []
-//     if (req.query.selectedColumns) {
-//       [book] = await Book.getBookProjection(req.params.name, req.query.selectedColumns);
-//     } else if (req.query.groupBy) {
-//       [book] = await Book.getBookGroupBy(req.params.name, req.query.groupBy);
-//     } else {
-//       [book] = await Book.getBook(req.params.name);
-//     }
-//     res.status(200).json(book);
-// } catch (err) {
-//   if (!err.statusCode) {
-//     err.statusCode = 500;
-//   }
-// }
-// });
+// getBook based on ID (for searching up on foreign keys)
+// localhost:3000/book/findByID/BK001
+// Needs to have 4 attributes minimum for the project
+exports.getBookID = (async (req, res, next) => {
+  try {
+    const [book] = await Book.getBookByID(req.params.id);
+    res.status(200).json(book);
+} catch (err) {
+  if (!err.statusCode) {
+    err.statusCode = 500;
+  }
+}
+});
   
 exports.createBook = (async (req, res, next) => {
   try {

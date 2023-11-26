@@ -9,13 +9,13 @@ router
   .post(bookController.createBook); 
 
 router
-  .route('/findByName')
+  .route('/findByName/:name')
   .get(bookController.getBookName) 
   // .patch(bookController.updateBook) 
   // .delete(bookController.deleteBook); 
 
-  router
-  .route('/findByID')
+router
+  .route('/findByID/:id')
   .get(bookController.getBookID) 
 
 module.exports = router;
