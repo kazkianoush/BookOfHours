@@ -3,7 +3,12 @@ const Book = require("../models/bookModel");
 
 exports.getAllBooks = (async (req, res, next) => {
   try {
-    const [allBooks] = await Book.getAllBooks();
+    let allBooks = []
+    if (req.query.selectedColumns) {
+      [allBooks] = await Book.getAllBooksProjection(req.query.selectedColumns);
+    } else {
+      [allBooks] = await Book.getAllBooks();
+    }
     res.status(200).json(allBooks);
   } catch (err) {
     if (!err.statusCode) {
@@ -11,10 +16,18 @@ exports.getAllBooks = (async (req, res, next) => {
     }
   }
 });
-  
-exports.getBook = (async (req, res, next) => {
+
+// getBook based on name with selectedColumns (projection) would look like this
+// localhost:3000/book/findByName/De Horis Book 2?selectedColumns=bookName,bookID,language
+// Needs to have 4 attributes minimum for the project
+exports.getBookName = (async (req, res, next) => {
   try {
-    const [book] = await Book.getBook(req.params.name);
+    let book = []
+    if (req.query.selectedColumns) {
+      [book] = await Book.getBookProjection(req.params.name, req.query.selectedColumns);
+    } else {
+      [book] = await Book.getBook(req.params.name);
+    }
     res.status(200).json(book);
 } catch (err) {
   if (!err.statusCode) {
@@ -22,6 +35,24 @@ exports.getBook = (async (req, res, next) => {
   }
 }
 });
+
+// exports.getBookID = (async (req, res, next) => {
+//   try {
+//     let book = []
+//     if (req.query.selectedColumns) {
+//       [book] = await Book.getBookProjection(req.params.name, req.query.selectedColumns);
+//     } else if (req.query.groupBy) {
+//       [book] = await Book.getBookGroupBy(req.params.name, req.query.groupBy);
+//     } else {
+//       [book] = await Book.getBook(req.params.name);
+//     }
+//     res.status(200).json(book);
+// } catch (err) {
+//   if (!err.statusCode) {
+//     err.statusCode = 500;
+//   }
+// }
+// });
   
 exports.createBook = (async (req, res, next) => {
   try {

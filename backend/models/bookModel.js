@@ -5,6 +5,16 @@ class BookModel {
       return database.promise().query('SELECT * FROM Book');
     }
 
+    static getAllBooksProjection(selectedColumns) {
+      const query = `SELECT ${selectedColumns} FROM Book`
+      return database.promise().query(query);
+    }
+
+    static getBookProjection(name, selectedColumns) {
+      const query = `SELECT ${selectedColumns} FROM Book WHERE bookName = ? OR bookName LIKE ?`
+      return database.promise().query(query, [name, `%${name}%`]);
+    }
+
     static getBook(name) {
       return database.promise().query('SELECT * FROM Book WHERE bookName = ? OR bookName LIKE ?', [name, `%${name}%`]);
     }
