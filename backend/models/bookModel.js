@@ -22,6 +22,16 @@ class BookModel {
     static getBookByID(ID) {
       return database.promise().query('SELECT * FROM Book WHERE bookID = ?', [ID]);
     }
+
+    static getBookByMemory(memoryID) {
+      return database.promise().query('SELECT * FROM Book b WHERE b.memoryID = ?', [memoryID]);
+    }
+
+    static getBookByMemoryGroupBy(memoryID, group) {
+      const query = `SELECT b.${group}, COUNT(*) as bookCount FROM Book b WHERE b.memoryID = ? GROUP BY b.${group}`
+      console.log(query)
+      return database.promise().query(query, [memoryID]);
+    }
   
     static async post(input) {
       // handle id increment

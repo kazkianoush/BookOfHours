@@ -16,6 +16,10 @@ router
 
 router
   .route('/findByID/:id')
-  .get(bookController.getBookID) 
+  .get(bookController.getBookByID) 
+
+router
+  .route('/findByMemory/:memoryID')
+  .get(bookController.getbookByMemory) 
 
 module.exports = router;

@@ -39,7 +39,7 @@ exports.getBookName = (async (req, res, next) => {
 // getBook based on ID (for searching up on foreign keys)
 // localhost:3000/book/findByID/BK001
 // Needs to have 4 attributes minimum for the project
-exports.getBookID = (async (req, res, next) => {
+exports.getBookByID = (async (req, res, next) => {
   try {
     const [book] = await Book.getBookByID(req.params.id);
     res.status(200).json(book);
@@ -49,6 +49,25 @@ exports.getBookID = (async (req, res, next) => {
   }
 }
 });
+
+// getBook based on memoryID (for searching up on foreign keys)
+// localhost:3000/book/findByID/BK001
+exports.getbookByMemory = (async (req, res, next) => {
+  try {
+    let book = []
+    if (req.query.groupby) {
+      [book] = await Book.getBookByMemoryGroupBy(req.params.memoryID, req.query.groupby);
+    } else {
+      [book] = await Book.getBookByMemory(req.params.memoryID);
+    }
+    res.status(200).json(book);
+} catch (err) {
+  if (!err.statusCode) {
+    err.statusCode = 500;
+  }
+}
+});
+
   
 exports.createBook = (async (req, res, next) => {
   try {
