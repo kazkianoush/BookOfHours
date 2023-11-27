@@ -114,3 +114,21 @@ exports.updateBook = async (req, res, next) => {
     next(err);
   }
 };
+
+
+exports.deleteBook = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    console.log(id)
+
+    // Your logic to delete the book with the given ID from the database
+    await Book.deleteBook(id);
+
+    res.status(200).json({ message: 'Book deleted successfully' });
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  }
+};

@@ -6,6 +6,7 @@ function InputForm({ onItemsChange }) {
   const [items, setItems] = useState([]);
   const [insertInput, setInsertInput] = useState("");
   const [updateInput, setUpdateInput] = useState("")
+  const [bookIDInput, setBookIDInput] = useState("")
 
   let list = {
     memoryID: 'ME111', // Example values, replace with actual user input
@@ -152,10 +153,9 @@ function InputForm({ onItemsChange }) {
   };
   
   const fetchAPIUpdate = async (data) => {
-    console.log(`http://localhost:3000/book/findByID/` + data.bookID+'');
     try {
-      const response = await fetch(`http://localhost:3000/book/findByID/` + data.bookID+'', {
-        method: "PUT",
+      const response = await fetch(`http://localhost:3000/book/findByID/${data.bookID}`, {
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
@@ -172,8 +172,30 @@ function InputForm({ onItemsChange }) {
       console.error("Error during update request:", error.message);
     }
   };
+  const handleSubmitDELETE = (e) => {
+    e.preventDefault();
+    handleDelete(e);
+  };
+  const handleDelete = async () => {
+    console.log(bookIDInput)
+    try {
+      const response = await fetch(`http://localhost:3000/book/findByID/${bookIDInput}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
   
+      if (!response.ok) {
+        throw new Error(`Delete request failed with status: ${response.status}`);
+      }
   
+      console.log("Delete request successful");
+      // You may want to update your state or perform additional actions after a successful delete
+    } catch (error) {
+      console.error("Error during delete request:", error.message);
+    }
+  };
 
 
   
@@ -217,6 +239,19 @@ function InputForm({ onItemsChange }) {
               onChange={(e) => setUpdateInput(e.target.value)}
             />
             <button className="col">UPDATE</button>
+          </form>
+          <h2>DELETE</h2>
+          {}
+          <form onSubmit={handleSubmitDELETE}>
+            {}
+            <input
+              className="input-form"
+              type="text"
+              placeholder="Enter DELETE"
+              value={bookIDInput}
+              onChange={(e) => setBookIDInput(e.target.value)}
+            />
+            <button className="col">DELETE</button>
           </form>
         </div>
       </div>

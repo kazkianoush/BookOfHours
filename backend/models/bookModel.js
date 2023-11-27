@@ -44,6 +44,7 @@ class BookModel {
     }
   
     static async update(bookID, updatedData) {
+      
       const updateColumns = Object.keys(updatedData)
           .map(column => `${column} = ?`)
           .join(', ');
@@ -54,9 +55,10 @@ class BookModel {
       return database.promise().query(updateQuery, values);
   }
   
-    // static delete(id) {
-    //   return database.execute('DELETE FROM groceries WHERE id = ?', [id]);
-    // }
+  static async deleteBook(bookID) {
+    const query = 'DELETE FROM Book WHERE bookID = ?';
+    return database.promise().query(query, [bookID]);
+  }
 };
 
 module.exports = BookModel
