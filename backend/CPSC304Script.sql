@@ -171,7 +171,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `People` (
   `peopleID` VARCHAR(20) NOT NULL,
-  `peopleName` VARCHAR(20) NULL,
+  `peopleName` VARCHAR(80) NULL,
   PRIMARY KEY (`peopleID`),
   UNIQUE INDEX `peopleName_UNIQUE` (`peopleName` ASC) VISIBLE)
 ENGINE = InnoDB;
@@ -198,7 +198,7 @@ CREATE TABLE IF NOT EXISTS `Visitor` (
   `visitorIsNumaOnly` BIT(1) NULL,
   `languageID` VARCHAR(20) NULL,
   PRIMARY KEY (`visitorID`),
-  UNIQUE INDEX `languageID_UNIQUE` (`languageID` ASC) VISIBLE,
+  -- UNIQUE INDEX `languageID_UNIQUE` (`languageID` ASC) VISIBLE,
     FOREIGN KEY (`visitorID`)
     REFERENCES `People` (`peopleID`)
     ON DELETE CASCADE
@@ -215,7 +215,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Assistant` (
     `assistantID` VARCHAR(20) NOT NULL,
-    `assistantSpecialty` VARCHAR(20) NULL,
+    `assistantSpecialty` VARCHAR(80) NULL,
     `assistantCost` INT NULL,
     `assistantLocation` VARCHAR(20) NULL,
     `itemID` VARCHAR(20) NULL,
@@ -480,23 +480,41 @@ VALUES ('BK001', 'The War of the Roads, 1451-1551', NULL, NULL, 'ME007', NULL, N
        ('BK097', 'The Locksmith''s Dream: Trespasses', NULL, NULL, 'ME016', NULL, NULL),
        ('BK098', 'By Their Marks Shall Ye Know Them', NULL, NULL, 'ME012', NULL, NULL),
        ('BK099', 'The Gospel of Zacchaeus', 'Greek', NULL, 'ME014', NULL, NULL),
-       ('BK100', 'Cardea''s Delights', 'Latin', NULL, 'ME012', NULL, NULL);
+       ('BK100', 'Cardea''s Delights', 'Latin', NULL, 'ME012', NULL, NULL),
+
+       ('BK105', 'Towards A Fundamental Aesthetic', 'Ericapaean', NULL, 'ME044', NULL, 'ME044'),
+
+       ('BK129', 'The Sun''s Design', 'Cracktrack', NULL, 'ME053', NULL, 'ME053'),
+
+       ('BK165', 'The Three And The Three (St Chiavi Manuscript)', NULL, NULL, 'ME055', NULL, 'ME055'),
+
+       ('BK177', 'Kopralith Omphalos', 'Killasimi', NULL, 'ME052', NULL, 'ME052'),
+
+       ('BK196', 'Serpent-Root', 'Cracktrack', NULL, 'ME043', NULL, 'ME043'),
+
+       ('BK198', 'The Writing On The Wall', 'Vak', NULL, 'ME054', NULL, 'ME054'),
+
+       ('BK206', 'The Turquoise Hand', 'Ramsund', NULL, 'ME047', NULL, 'ME047'),
+
+       ('BK252', 'Shuritic Book of Suns', 'Deep Mandaic', NULL, 'ME048', NULL, 'ME048'),
+
+       ('BK278', 'Towards A Fundamental Aesthetic: Second Edition', 'Ericapaean', NULL, 'ME046', NULL, 'ME046');
        
 -- Numen
 INSERT IGNORE INTO Numen(numenID, bookID)
-VALUES ('ME043', NULL),
-        ('ME044', NULL),
+VALUES ('ME043', 'BK196'),
+        ('ME044', 'BK105'),
         ('ME045','BK066'),
-        ('ME046', NULL),
-        ('ME047', NULL),
-        ('ME048', NULL),
+        ('ME046', 'BK278'),
+        ('ME047', 'BK206'),
+        ('ME048', 'BK252'),
         ('ME049', 'BK016'),
         ('ME050', 'BK039'),
         ('ME051', 'BK015'),
-        ('ME052', NULL),
-        ('ME053', NULL),
-        ('ME054', NULL),
-        ('ME055', NULL);
+        ('ME052', 'BK177'),
+        ('ME053', 'BK129'),
+        ('ME054', 'BK198'),
+        ('ME055', 'BK165');
 
 -- Aspect
 INSERT IGNORE INTO Aspect(aspectID, aspectName, itemID)
@@ -514,6 +532,7 @@ VALUES ('AS001', 'Edge', NULL),
        ('AS012', 'Sky', NULL),
        ('AS013', 'Winter', NULL);
 
+-- Update book with aspectID
 UPDATE Book
 SET aspectID =
     CASE
@@ -525,8 +544,136 @@ SET aspectID =
         THEN 'AS003'
     WHEN CAST(SUBSTRING(bookID, 3, 3) AS UNSIGNED) >= 072 AND CAST(SUBSTRING(bookID, 3, 3) AS UNSIGNED) <= 090
         THEN 'AS004'
-    WHEN CAST(SUBSTRING(bookID, 3, 3) AS UNSIGNED) >= 091 AND CAST(SUBSTRING(bookID, 3, 3) AS UNSIGNED) <= 100
+    WHEN CAST(SUBSTRING(bookID, 3, 3) AS UNSIGNED) >= 091 AND CAST(SUBSTRING(bookID, 3, 3) AS UNSIGNED) <= 113
         THEN 'AS005'
+    WHEN CAST(SUBSTRING(bookID, 3, 3) AS UNSIGNED) >= 114 AND CAST(SUBSTRING(bookID, 3, 3) AS UNSIGNED) <= 134
+        THEN 'AS006'
+    WHEN CAST(SUBSTRING(bookID, 3, 3) AS UNSIGNED) >= 135 AND CAST(SUBSTRING(bookID, 3, 3) AS UNSIGNED) <= 165
+        THEN 'AS007'
+    WHEN CAST(SUBSTRING(bookID, 3, 3) AS UNSIGNED) >= 166 AND CAST(SUBSTRING(bookID, 3, 3) AS UNSIGNED) <= 185
+        THEN 'AS008'
+    WHEN CAST(SUBSTRING(bookID, 3, 3) AS UNSIGNED) >= 186 AND CAST(SUBSTRING(bookID, 3, 3) AS UNSIGNED) <= 199
+        THEN 'AS009'
+    WHEN CAST(SUBSTRING(bookID, 3, 3) AS UNSIGNED) >= 200 AND CAST(SUBSTRING(bookID, 3, 3) AS UNSIGNED) <= 213
+        THEN 'AS010'
+    WHEN CAST(SUBSTRING(bookID, 3, 3) AS UNSIGNED) >= 214 AND CAST(SUBSTRING(bookID, 3, 3) AS UNSIGNED) <= 231
+        THEN 'AS011'
+    WHEN CAST(SUBSTRING(bookID, 3, 3) AS UNSIGNED) >= 232 AND CAST(SUBSTRING(bookID, 3, 3) AS UNSIGNED) <= 260
+        THEN 'AS012'
+    WHEN CAST(SUBSTRING(bookID, 3, 3) AS UNSIGNED) >= 261 AND CAST(SUBSTRING(bookID, 3, 3) AS UNSIGNED) <= 282
+        THEN 'AS013'
     END
 WHERE (bookID IS NOT NULL AND memoryID IS NOT NULL AND aspectID IS NULL AND elementOfTheSoulID IS NULL
-		AND CAST(SUBSTRING(bookID, 3, 3) AS UNSIGNED) BETWEEN 1 AND 100);
+		AND CAST(SUBSTRING(bookID, 3, 3) AS UNSIGNED) BETWEEN 1 AND 282);
+
+-- People
+
+INSERT IGNORE INTO People(peopleID, peopleName)
+VALUES ('PE001', 'Denzil the Blacksmith'),
+       ('PE002', 'Mrs Kille'),
+       ('PE003', 'Mr Kille'),
+       ('PE004', 'Riverend Timothy'),
+       ('PE005', 'Miner'),
+       ('PE006', 'Barber'),
+       ('PE007', 'Orchard-Keeper'),
+       ('PE008', 'Fisherman'),
+       ('PE009', 'Travelling Musician'),
+       ('PE010', 'Fugitive'),
+       ('PE011', 'Surrealist Painter'),
+       ('PE012', 'Consulting Engineer'),
+       ('PE013', 'Poet'),
+       ('PE014', 'Unusual Nun'),
+       ('PE015', 'Mr Peter Agdistis'),
+       ('PE016', 'Dr Ibn al-Adim'),
+       ('PE017', 'Lt Arthur Thomas Moore (Ret.)'),
+       ('PE018', 'Dr Arun Peel'),
+       ('PE019', 'Ms Azita Bukhara'),
+       ('PE020', 'Lalla Chaima'),
+       ('PE021', 'MCO Constance Lee'),
+       ('PE022', 'Princess Conquille Amirejibi'),
+       ('PE023', 'Sr. Corso Reverte'),
+       ('PE024', '''Daymare'''),
+       ('PE025', 'DI Douglas Moore'),
+       ('PE026', 'Mr Ehsan Fekri'),
+       ('PE027', 'Mr Fraser Strathcoyne'),
+       ('PE028', 'Magister Hokobald'),
+       ('PE029', 'Mlle Margot Matutine'),
+       ('PE030', 'Mme Olympe Bechet'),
+       ('PE031', 'Dr Serena Blackwood'),
+       ('PE032', 'Fr. Stanislav John Schaller'),
+       ('PE033', 'Dr Yvette Southey'),
+       ('PE034', 'Mr Zachary Wakefield'),
+       ('PE035', 'Aunt Mopsy'),
+       ('PE036', 'Lord Franklin Bancroft'),
+       ('PE037', 'Julian Coseley'),
+       ('PE038', 'Professor Rowena Hengerst');
+
+-- Assistant
+INSERT IGNORE INTO Assistant(assistantID, assistantSpecialty, assistantCost, assistantLocation, itemID, elementOfTheSoulID)
+VALUES ('PE001', 'Can use metals', 12, 'Smithy', NULL, NULL),
+       ('PE002', 'Can use fabric and fibre', 12, 'Kille House', NULL, NULL),
+       ('PE003', 'Can use wood', 12, 'Kille House', NULL, NULL),
+       ('PE004', 'Can use candles', 12, 'Rectory', NULL, NULL),
+       ('PE005', NULL, 12, 'Sweet Bones, Spring', NULL, NULL),
+       ('PE006', NULL, 12, 'Sweet Bones, Summer', NULL, NULL),
+       ('PE007', NULL, 12, 'Sweet Bones, Autumn', NULL, NULL),
+       ('PE008', NULL, 12, 'Sweet Bones, Winter', NULL, NULL),
+       ('PE009', NULL, 24, 'Sweet Bones', NULL, NULL),
+       ('PE010', NULL, 24, 'Sweet Bones', NULL, NULL),
+       ('PE011', 'Can use pigments', 24, 'Sweet Bones', NULL, NULL),
+       ('PE012', 'Can use fuel', 24, 'Sweet Bones', NULL, NULL),
+       ('PE013', 'Can use flower', 24, 'Sweet Bones', NULL, NULL),
+       ('PE014', 'Can use omen', 24, 'Sweet Bones', NULL, NULL);
+
+-- Skill, language only
+INSERT IGNORE INTO Skill(skillID, skillName, specialAttribute, aspectID)
+VALUES ('SK007', 'Deep Mandaic', 'Language', 'AS002'),
+       ('SK012', 'Hyksos', 'Language', 'AS003'),
+       ('SK017', 'Fucine', 'Language', 'AS004'),
+       ('SK025', 'Vak', 'Language', 'AS005'),
+       ('SK027', 'Ericapaean', 'Language', 'AS006'),
+       ('SK039', 'Ramsund', 'Language', 'AS008'),
+       ('SK041', 'Sabazine', 'Language', 'AS008'),
+       ('SK044', 'Cracktrack', 'Language', 'AS009'),
+       ('SK058', 'Kernewek Henavek', 'Language', 'AS011'),
+       ('SK069', 'Killasimi', 'Language', 'AS013');
+
+-- Language
+INSERT IGNORE INTO Language(languageID, notCraftable)
+VALUES ('SK007', 1),
+       ('SK012', 1),
+       ('SK017', 1),
+       ('SK025', 1),
+       ('SK027', 1),
+       ('SK039', 1),
+       ('SK041', 1),
+       ('SK044', 1),
+       ('SK058', 1),
+       ('SK069', 1);
+
+-- Visitor
+INSERT IGNORE INTO Visitor(visitorID, visitorIsNumaOnly, languageID)
+VALUES ('PE015', 0, 'SK017'),
+       ('PE016', 0, 'SK041'),
+       ('PE017', 0, 'SK041'),
+       ('PE018', 0, 'SK025'),
+       ('PE019', 0, 'SK007'),
+       ('PE020', 0, 'SK044'),
+       ('PE021', 0, 'SK069'),
+       ('PE022', 0, 'SK025'),
+       ('PE023', 0, 'SK012'),
+       ('PE024', 0, 'Sk039'),
+       ('PE025', 0, NULL),
+       ('PE026', 0, 'SK007'),
+       ('PE027', 0, 'SK039'),
+       ('PE028', 0, 'SK007'),
+       ('PE029', 0, 'SK069'),
+       ('PE030', 0, 'SK039'),
+       ('PE031', 0, 'SK017'),
+       ('PE032', 0, 'SK044'),
+       ('PE033', 0, 'SK027'),
+       ('PE034', 0, 'SK069'),
+       ('PE035', 1, 'SK012'),
+       ('PE036', 1, 'SK007'),
+       ('PE037', 1, 'SK027'),
+       ('PE038', 1, 'SK058');
