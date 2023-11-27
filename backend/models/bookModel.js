@@ -47,11 +47,10 @@ class BookModel {
       const updateColumns = Object.keys(updatedData)
           .map(column => `${column} = ?`)
           .join(', ');
-
+          
       const updateQuery = `UPDATE Book SET ${updateColumns} WHERE bookID = ?`;
-
+      
       const values = [...Object.values(updatedData), bookID];
-
       return database.promise().query(updateQuery, values);
   }
   

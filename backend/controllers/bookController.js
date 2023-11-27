@@ -100,14 +100,11 @@ exports.createBook = async (req, res, next) => {
 };
 
 exports.updateBook = async (req, res, next) => {
-  console.log('here');
   try {
-    
-
     // Validate the incoming data as needed
-
+    
     // Call the update method in the BookModel
-    await BookModel.update(req.params.id, req.body);
+    await Book.update(req.params.id, req.body);
 
     res.status(200).json({ message: 'Book updated successfully' });
   } catch (err) {
