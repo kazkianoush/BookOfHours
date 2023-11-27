@@ -482,3 +482,51 @@ VALUES ('BK001', 'The War of the Roads, 1451-1551', NULL, NULL, 'ME007', NULL, N
        ('BK099', 'The Gospel of Zacchaeus', 'Greek', NULL, 'ME014', NULL, NULL),
        ('BK100', 'Cardea''s Delights', 'Latin', NULL, 'ME012', NULL, NULL);
        
+-- Numen
+INSERT IGNORE INTO Numen(numenID, bookID)
+VALUES ('ME043', NULL),
+        ('ME044', NULL),
+        ('ME045','BK066'),
+        ('ME046', NULL),
+        ('ME047', NULL),
+        ('ME048', NULL),
+        ('ME049', 'BK016'),
+        ('ME050', 'BK039'),
+        ('ME051', 'BK015'),
+        ('ME052', NULL),
+        ('ME053', NULL),
+        ('ME054', NULL),
+        ('ME055', NULL);
+
+-- Aspect
+INSERT IGNORE INTO Aspect(aspectID, aspectName, itemID)
+VALUES ('AS001', 'Edge', NULL),
+       ('AS002', 'Forge', NULL),
+       ('AS003', 'Grail', NULL),
+       ('AS004', 'Heart', NULL),
+       ('AS005', 'Knock', NULL),
+       ('AS006', 'Lantern', NULL),
+       ('AS007', 'Moon', NULL),
+       ('AS008', 'Moth', NULL),
+       ('AS009', 'Nectar', NULL),
+       ('AS010', 'Rose', NULL),
+       ('AS011', 'Scale', NULL),
+       ('AS012', 'Sky', NULL),
+       ('AS013', 'Winter', NULL);
+
+UPDATE Book
+SET aspectID =
+    CASE
+    WHEN CAST(SUBSTRING(bookID, 3, 3) AS UNSIGNED) >= 001 AND CAST(SUBSTRING(bookID, 3, 3) AS UNSIGNED) <= 022
+        THEN 'AS001'
+    WHEN CAST(SUBSTRING(bookID, 3, 3) AS UNSIGNED) >= 023 AND CAST(SUBSTRING(bookID, 3, 3) AS UNSIGNED) <= 047
+        THEN 'AS002'
+    WHEN CAST(SUBSTRING(bookID, 3, 3) AS UNSIGNED) >= 048 AND CAST(SUBSTRING(bookID, 3, 3) AS UNSIGNED) <= 071
+        THEN 'AS003'
+    WHEN CAST(SUBSTRING(bookID, 3, 3) AS UNSIGNED) >= 072 AND CAST(SUBSTRING(bookID, 3, 3) AS UNSIGNED) <= 090
+        THEN 'AS004'
+    WHEN CAST(SUBSTRING(bookID, 3, 3) AS UNSIGNED) >= 091 AND CAST(SUBSTRING(bookID, 3, 3) AS UNSIGNED) <= 100
+        THEN 'AS005'
+    END
+WHERE (bookID IS NOT NULL AND memoryID IS NOT NULL AND aspectID IS NULL AND elementOfTheSoulID IS NULL
+		AND CAST(SUBSTRING(bookID, 3, 3) AS UNSIGNED) BETWEEN 1 AND 100);
