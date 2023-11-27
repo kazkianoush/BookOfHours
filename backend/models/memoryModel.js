@@ -9,8 +9,12 @@ class MemoryModel {
       return database.promise().query('SELECT * FROM Memory');
     }
 
-    static getMemory(name) {
-      return database.promise().query('SELECT * FROM Memory WHERE memoryName = ?', [name]);
+    static getMemoryByName(name) {
+      return database.promise().query("SELECT * FROM Memory WHERE memoryName = ? OR memoryName LIKE ?", [name, `%${name}%`]);
+    }
+
+    static getMemoryByID(ID) {
+      return database.promise().query("SELECT * FROM Memory WHERE memoryID = ? OR memoryID LIKE ?", [ID, `%${ID}%`]);
     }
   
     // static post(item) {

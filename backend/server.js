@@ -1,11 +1,15 @@
 const express = require('express'); 
-const memoryRouter = require('./router/memoryRouter.js');
-// const bookRouter = require('./router/bookRouter.js');
-const database = require('./utils/database.js')
+const bodyParser = require('body-parser');
 const cors = require('cors');
 
+const memoryRouter = require('./router/memoryRouter.js');
+const bookRouter = require('./router/bookRouter.js');
+const database = require('./utils/database.js')
 
 const app = express();
+
+app.use(bodyParser.json());
+
 app.use(cors({
   origin: 'http://localhost:4000',
   credentials: true,
@@ -17,7 +21,7 @@ const server = app.listen(port, () => {
 });
 
 app.use('/memory', memoryRouter);
-// app.use('/book', bookRouter);
+app.use('/book', bookRouter);
 
 process.on('exit', () => {database.disconnect()})
 

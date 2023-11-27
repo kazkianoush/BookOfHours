@@ -20,8 +20,8 @@ const connect = () => connection.connect(async (err) => {
         console.log('Connection error message: ' + err.message);
         return;
     }
-    console.log('Connected!');
     connection.query(initQueries)
+    console.log('Connected!');
 });
 
 const disconnect = () => {

@@ -3,11 +3,7 @@ import InputForm from "../inputForm/inputForm";
 import OutputPanel from "../outputPanel/outputPanel";
 
 function Display() {
-  const [submittedQuery, setSubmittedQuery] = useState("");
-
-  const handleQueryChange = (newQuery) => {
-    setSubmittedQuery(newQuery);
-  };
+  const [data, setData] = useState("");
 
   return (
     <>
@@ -16,9 +12,9 @@ function Display() {
         <h3>A video game developed by WeatherFactory</h3>
       </div>
       <div style={{ height: "2rem" }}></div>
-      <InputForm onQueryChange={handleQueryChange} />
+      <InputForm setData = {setData} />
       <div style={{ height: "2rem" }}></div>
-      <OutputPanel userInput={submittedQuery} />
+      <OutputPanel data = {data} />
     </>
   );
 }

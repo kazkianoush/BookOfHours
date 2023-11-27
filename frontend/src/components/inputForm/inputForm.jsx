@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./styles.css";
 
-function InputForm({ onQueryChange }) {
+function InputForm(props) {
   const [query, setQuery] = useState("");
 
   const handleSubmit = (e) => {
@@ -13,26 +13,44 @@ function InputForm({ onQueryChange }) {
   const fetchAPI = async (e) =>{
     e.preventDefault();
     try{
-      const response =  fetch('http://localhost:3000/memory', { 
-      credentials: "include",
+      const allData = await Promise.all(['memory', 'book'].map(tableName =>
+        fetch(`http://localhost:3000/${tableName}/${query}`, { 
+            credentials: "include",
+            
+            method: "GET",
       
-      method: "POST",
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+           },
+          
+          })
+          .then(response => response.json())
+          )
+        );
+      console.log(allData);
+      props.setData(allData);
+    //   const response =  fetch(`http://localhost:3000/book/${query}`, { 
+    //   credentials: "include",
+      
+    //   method: "GET",
 
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-     },
-
-      body: {query: query}
+    //   headers: {
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json',
+    //  },
     
-    
-    });
-      // const data = await response.json();
-      // console.log(data);
-      response.then(responses => responses.json().then(data => ({
-        data: data
-      }))).then(res => 
-        console.log(res.data[0]))
+    // });
+    //   // const data = await response.json();
+    //   // console.log(data);
+    //   response.then(responses => responses.json().then(data => ({
+    //     data: data
+    //   }))).then(res => {
+    //     console.log(res.data.length);
+    //     console.log(res.data);
+    //     props.setData(res.data);
+    //     }
+    //   )
     }catch (e) {
       console.log(e);
 
