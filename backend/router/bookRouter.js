@@ -11,13 +11,12 @@ router
 router
   .route('/findByName/:name')
   .get(bookController.getBookName) 
-  // .patch(bookController.updateBook) 
   // .delete(bookController.deleteBook); 
 
 router
   .route('/findByID/:id')
   .get(bookController.getBookByID) 
-
+  .patch(bookController.updateBook); 
 router
   .route('/findByMemory/:memoryID')
   .get(bookController.getbookByMemory) 

@@ -69,23 +69,51 @@ exports.getbookByMemory = (async (req, res, next) => {
 });
 
   
-exports.createBook = (async (req, res, next) => {
+exports.createBook = async (req, res, next) => {
   try {
-    let newBook = {
-      bookName: req.body.bookName,
-      language: req.body.language,
-      memoryID: req.body.memoryID, 
+    const { bookID, bookName, language, aspectID, memoryID, elementOfTheSoulID, numenID } = req.body;
+
+    // Validate the incoming data as needed
+
+    // Create an object with the user input
+    console.log(req.body)
+    const newBook = {
+      bookID,
+      bookName,
+      language,
+      aspectID,
+      memoryID,
+      elementOfTheSoulID,
+      numenID,
     };
-    const [bookExists] = await Book.getBook(newBook.bookName)
-    if (!bookExists.length) {
-      await Book.post(newBook);
-      res.status(201).json(bookExists);
-    } else {
-      res.status(409);
-    }
+
+    // Call the create method in the MemoryModel
+    await Book.post(newBook);
+
+    res.status(200).json({ message: 'Book created successfully' });
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
     }
+    next(err);
   }
-});
+};
+
+exports.updateBook = async (req, res, next) => {
+  console.log('here');
+  try {
+    
+
+    // Validate the incoming data as needed
+
+    // Call the update method in the BookModel
+    await BookModel.update(req.params.id, req.body);
+
+    res.status(200).json({ message: 'Book updated successfully' });
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  }
+};

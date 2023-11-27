@@ -34,24 +34,34 @@ exports.getMemoryByID = (async (req, res, next) => {
 }
 });
   
-exports.createMemory = (async (req, res, next) => {
+exports.createMemory = async (req, res, next) => {
   try {
-    const body = await request.body({ type: 'json' });
-    const requestBody = await body.value;
-    console.log(requestBody.task);
-    let newTodo = {
-        task: requestBody.task
+    const { memoryID, memoryName, memorySources, memoryIsSound, memoryIsOmen, memoryIsPersistent, memoryIsWeather } = req.body;
+
+    // Validate the incoming data as needed
+
+    // Create an object with the user input
+    const newMemory = {
+      memoryID,
+      memoryName,
+      memorySources,
+      memoryIsSound,
+      memoryIsOmen,
+      memoryIsPersistent,
+      memoryIsWeather,
     };
-    console.log(newTodo);
-    await Memory.create(newTodo);
-    response.status = 200;
+
+    // Call the create method in the MemoryModel
+    await Memory.create(newMemory);
+
+    res.status(200).json({ message: 'Memory created successfully' });
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
     }
+    next(err);
   }
-});
-  
+};
   exports.updateMemory = (async (req, res, next) => {
     // const tour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
     //   new: true,

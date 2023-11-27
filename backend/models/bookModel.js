@@ -43,9 +43,17 @@ class BookModel {
       , [newBookID, input.bookName, input.language, input.memoryID]);
     }
   
-    // static update(id, item) {
-    //   return database.execute('UPDATE groceries SET item = ? WHERE id = ?', [item, id]);
-    // }
+    static async update(bookID, updatedData) {
+      const updateColumns = Object.keys(updatedData)
+          .map(column => `${column} = ?`)
+          .join(', ');
+
+      const updateQuery = `UPDATE Book SET ${updateColumns} WHERE bookID = ?`;
+
+      const values = [...Object.values(updatedData), bookID];
+
+      return database.promise().query(updateQuery, values);
+  }
   
     // static delete(id) {
     //   return database.execute('DELETE FROM groceries WHERE id = ?', [id]);
