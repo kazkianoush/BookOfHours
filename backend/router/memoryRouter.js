@@ -11,7 +11,9 @@ router
 router
   .route('/:name')
   .get(memoryController.getMemory) 
-  // .patch(memoryController.updateMemory) 
   // .delete(memoryController.deleteMemory); 
+router
+  .route('/:id')
+  .patch(memoryController.updateMemory)
 
-module.exports = router;
+module.exports = router
