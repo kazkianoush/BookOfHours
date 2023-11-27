@@ -10,6 +10,7 @@ app.use(cors({
   origin: 'http://localhost:4000',
   credentials: true,
 }));
+app.use(express.json()); 
 const port = 3000;
 const server = app.listen(port, () => {
   database.connect();
