@@ -35,36 +35,37 @@ function InputForm({ onItemsChange }) {
   }, [items]);
 
   const handleSubmit = (e) => {
+    let subUrl = ""
     e.preventDefault();
+
+    if (query != "") {
+      subUrl = `/findByName/${query}`;
+    }
+
     console.log("First form submitted:", query);
-    fetchAPI(e);
+    fetchAPI(e, subUrl);
   };
 
-  const fetchAPI = async (e) => {
+  const fetchAPI = async (e, subUrl) => {
     e.preventDefault();
     try {
-      const response = fetch(`http://localhost:3000/book/findbyname/${query}`, {
-        credentials: "include",
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      });
+      const allData = await Promise.all(['memory','book', 'people'].map(tableName =>
+        fetch(`http://localhost:3000/${tableName}${subUrl}`, { 
+            credentials: "include",
 
-      response
-        .then((responses) =>
-          responses.json().then((data) => ({
-            data: data,
-          }))
-        )
-        .then((res) => {
-          console.log(res.data.length);
-          console.log(res.data);
+            method: "GET",
 
-          setItems(res.data);
-        });
-    } catch (e) {
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+           },
+
+          }).then(response => response.json())
+          )
+        );
+      console.log(allData);
+      onItemsChange(allData);
+    }catch (e) {
       console.log(e);
     }
   };

@@ -3,7 +3,6 @@ import InputForm from "../inputForm/inputForm";
 import OutputPanel from "../outputPanel/outputPanel";
 
 function Display() {
-  const [data, setData] = useState("");
   const [items, setItems] = useState([])
 
   const handleItemsChange= (newItems) => {
