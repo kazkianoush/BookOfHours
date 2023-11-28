@@ -240,8 +240,8 @@ function InputForm({ onItemsChange }) {
              <button className="col" type="button" onClick={handleFilterClick}>Filter</button>
              <button className="col" type="button" onClick={handleAdvancedClick}>Advanced</button>
           </form>
-          <div className="filterPanel">Balls</div>
-          <div className="advancedPanel">Cock</div>
+          <div className="filterPanel">Totally Working Filter</div>
+          <div className="advancedPanel">Totally Working Advanced</div>
           <h2>INSERT</h2>
           {}
           <form onSubmit={handleSubmitINSERT}>
