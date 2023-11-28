@@ -1,11 +1,11 @@
 table {
     border-collapse: collapse;
     margin-bottom: 2rem;
-    border: 2pt solid rgb(238, 238, 238);
+    border: 1pt solid rgb(238, 238, 238);
   }
   
   tr {
-    border: 1pt solid rgb(238, 238, 238);
+    border: 0.5pt solid rgb(238, 238, 238);
   }
   tr:nth-child(even) {
     background-color: #313338;
@@ -15,6 +15,13 @@ table {
   }
 
   td {
-    border-left: 1px solid rgb(238, 238, 238);
-    border-right: 1px solid rgb(238, 238, 238);
+    border-left: 0.5pt solid rgb(238, 238, 238);
+    border-right: 0.5pt solid rgb(238, 238, 238);
+}
+
+.tableName {
+    border: 1pt solid rgb(238, 238, 238);
+    border-bottom: none;
+    font-weight: bolder;
+    background-color: 	#282b30;
 }

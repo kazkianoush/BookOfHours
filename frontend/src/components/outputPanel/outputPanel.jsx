@@ -22,6 +22,8 @@ function OutputPanel(props) {
   
   let renderedTable = biggerArray.map(bigArray => {
     return(
+      <>
+      <div className="tableName">{parseTableName(bigArray[0][0].field.substring(0, bigArray[0][0].field.length - 2))}</div>
       <table width={"100%"}>
         <thead>
           <tr>
@@ -35,12 +37,13 @@ function OutputPanel(props) {
       {bigArray.map((row, rowIndex) => (
         <tr key={rowIndex}>
           {row.map((cell, cellIndex) => (
-            <td key={cellIndex}>{cell.value}</td>
+            <td key={cellIndex}>{parseTableValue(cell.value)}</td>
           ))}
         </tr>
       ))}
     </tbody>
   </table>
+      </>
     )
   })
 
@@ -51,9 +54,25 @@ function OutputPanel(props) {
   );
 }
 
-// function renderTable() {
- 
-//   return <div>{returnedOutput}</div>;
-// }
+function parseTableName(string) {
+  console.log(string);
+  switch (string) {
+    case 'memory':
+      return 'Memory';
+    case 'book':
+      return 'Book';
+    case 'people':
+      return 'People';
+  }
+}
+
+function parseTableValue(string) {
+  if (string == '0') {
+    return 'False';
+  } else if (string == '1') {
+    return 'True';
+  } else
+    return string;
+}
 
 export default OutputPanel;
