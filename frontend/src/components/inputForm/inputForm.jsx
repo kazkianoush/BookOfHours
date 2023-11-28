@@ -43,10 +43,6 @@ function InputForm({ onItemsChange }) {
     if (query != "") {
       subUrl = `/findByName/${query}`;
     }
-    if (query == "" && numenOnly) {
-      subUrl = ``;
-    }
-
     fetchAPI(e, subUrl);
   };
 
@@ -54,7 +50,7 @@ function InputForm({ onItemsChange }) {
     e.preventDefault();
     if (numenOnly) {
       try {
-        const numenData = await fetch(`http://localhost:3000/numen`, { 
+        const numenData = await fetch(`http://localhost:3000/numen` + subUrl, { 
           credentials: "include",
 
           method: "GET",
@@ -93,7 +89,14 @@ function InputForm({ onItemsChange }) {
   };
 
 
+  const handleFilterClick = () => {
+    const filterPanel = document.getElementsByClassName('filterPanel');
+    
+  }
 
+  const handleAdvancedClick = () => {
+    // 
+  }
 
   const handleSubmitINSERT = (e) => {
     e.preventDefault();
@@ -234,9 +237,11 @@ function InputForm({ onItemsChange }) {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
-            <button className="col">Filter</button>
-            <button className="col">Advanced</button>
+             <button className="col" type="button" onClick={handleFilterClick}>Filter</button>
+             <button className="col" type="button" onClick={handleAdvancedClick}>Advanced</button>
           </form>
+          <div className="filterPanel">Balls</div>
+          <div className="advancedPanel">Cock</div>
           <h2>INSERT</h2>
           {}
           <form onSubmit={handleSubmitINSERT}>
