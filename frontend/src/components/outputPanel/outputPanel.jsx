@@ -21,6 +21,7 @@ function OutputPanel(props) {
   console.log(biggerArray);
   
   let renderedTable = biggerArray.map(bigArray => {
+    if (bigArray.length == 0) return null;
     return(
       <>
       <div className="tableName">{parseTableName(bigArray[0][0].field.substring(0, bigArray[0][0].field.length - 2))}</div>

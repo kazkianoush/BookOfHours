@@ -12,6 +12,10 @@ router
   .get(numenController.getNumenByID);
 
 router
+  .route('/findByName/:name')
+  .get(numenController.getNumenByName);
+
+router
   .route('/findByBookID/:bookid')
   .get(numenController.getNumenByBookID);
   
