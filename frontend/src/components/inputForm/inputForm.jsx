@@ -5,9 +5,11 @@ function InputForm({ onItemsChange }) {
   const [query, setQuery] = useState("");
   const [items, setItems] = useState([]);
   const [insertInput, setInsertInput] = useState("");
-  const [updateInput, setUpdateInput] = useState("")
-  const [bookIDInput, setBookIDInput] = useState("")
+  const [updateInput, setUpdateInput] = useState("");
+  const [bookIDInput, setBookIDInput] = useState("");
 
+  let numenOnly = 0;
+  
   let list = {
     memoryID: 'ME111', // Example values, replace with actual user input
     memoryName: 'Memory: Taste hellooo',
@@ -35,39 +37,59 @@ function InputForm({ onItemsChange }) {
   }, [items]);
 
   const handleSubmit = (e) => {
-    let subUrl = ""
     e.preventDefault();
+    let subUrl = ``;
 
     if (query != "") {
       subUrl = `/findByName/${query}`;
     }
+    if (query == "" && numenOnly) {
+      subUrl = ``;
+    }
 
-    console.log("First form submitted:", query);
     fetchAPI(e, subUrl);
   };
 
   const fetchAPI = async (e, subUrl) => {
     e.preventDefault();
-    try {
-      const allData = await Promise.all(['memory','book', 'people'].map(tableName =>
-        fetch(`http://localhost:3000/${tableName}${subUrl}`, { 
-            credentials: "include",
+    if (numenOnly) {
+      try {
+        const numenData = await fetch(`http://localhost:3000/numen`, { 
+          credentials: "include",
 
-            method: "GET",
+          method: "GET",
 
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-           },
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+         },
 
-          }).then(response => response.json())
-          )
-        );
-      console.log(allData);
-      onItemsChange(allData);
-    }catch (e) {
+        }).then(response => response.json())
+        onItemsChange([numenData]);
+      } catch (e) {
       console.log(e);
-    }
+      }
+    } else {
+        try {
+          const allData = await Promise.all(['memory','book', 'people'].map(tableName =>
+            fetch(`http://localhost:3000/${tableName}${subUrl}`, { 
+                credentials: "include",
+    
+                method: "GET",
+    
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+               },
+    
+              }).then(response => response.json())
+              )
+            );
+          onItemsChange(allData);
+        }catch (e) {
+          console.log(e);
+        }
+      }
   };
 
 
