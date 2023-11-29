@@ -16,7 +16,7 @@ function FilterPanel(props) {
        <>
        <div>Change what can be shown using the checkboxes</div>
        <div>Memory: &nbsp;
-            Show all <input type="checkbox"/> &nbsp;
+            Show <input type="checkbox"/> &nbsp;
             MemoryID <input type="checkbox"/> &nbsp;
             MemoryName <input type="checkbox"/> &nbsp;
             MemorySources <input type="checkbox"/> &nbsp;
@@ -27,7 +27,7 @@ function FilterPanel(props) {
        </div>
        <div>
             Book: &nbsp;
-            Show all <input type="checkbox" checked = {selectedBookColumns[0]} onChange={() => handleBookCheckboxes(0)}/> &nbsp;
+            Show <input type="checkbox" checked = {selectedBookColumns[0]} onChange={() => handleBookCheckboxes(0)}/> &nbsp;
             bookID <input type="checkbox" checked = {selectedBookColumns[1]} onChange={() => handleBookCheckboxes(1)}/> &nbsp;
             bookName <input type="checkbox" checked = {selectedBookColumns[2]} onChange={() => handleBookCheckboxes(2)}/> &nbsp;
             language <input type="checkbox" checked = {selectedBookColumns[3]} onChange={() => handleBookCheckboxes(3)}/> &nbsp;

@@ -84,8 +84,6 @@ function InputForm({ onItemsChange }) {
       columnArr.push("numenID");
     }
     selectedColumns = columnArr.join();
-    console.log(tableNames);
-    console.log(selectedColumns);
   }
 
   const filterTableName = (tableName) => {
@@ -167,7 +165,6 @@ function InputForm({ onItemsChange }) {
       updatedState[1][i] = state;
     })
     setSelectedColumnsAllTable(updatedState);
-    console.log(updatedState);
   }
 
   const handleAdvancedClick = () => {
@@ -204,7 +201,6 @@ function InputForm({ onItemsChange }) {
       elementOfTheSoulID: values[5] || list.memoryIsPersistent,
       numenID: values[6] || list.memoryIsWeather,
     };
-    console.log(list)
     fetchAPIInsert(listBook);
   };
 
