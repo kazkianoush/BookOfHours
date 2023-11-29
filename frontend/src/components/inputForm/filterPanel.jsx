@@ -2,7 +2,7 @@ import { useState } from "react";
 
 
 function FilterPanel(props) {
-    const [selectedBookColumns, setSelectedBookColumns] = useState([true, false, false, false, false, false]);
+    const [selectedBookColumns, setSelectedBookColumns] = useState([true, false, false, false, false, false, false]);
 
     const handleBookCheckboxes = (checkboxIndex) => {
         const updatedSelectedBookColumns = selectedBookColumns.map((column, index) =>
@@ -31,8 +31,9 @@ function FilterPanel(props) {
             bookID <input type="checkbox" checked = {selectedBookColumns[1]} onChange={() => handleBookCheckboxes(1)}/> &nbsp;
             bookName <input type="checkbox" checked = {selectedBookColumns[2]} onChange={() => handleBookCheckboxes(2)}/> &nbsp;
             language <input type="checkbox" checked = {selectedBookColumns[3]} onChange={() => handleBookCheckboxes(3)}/> &nbsp;
-            memoryID <input type="checkbox" checked = {selectedBookColumns[4]} onChange={() => handleBookCheckboxes(4)}/> &nbsp;
-            numenID <input type="checkbox" checked = {selectedBookColumns[5]} onChange={() => handleBookCheckboxes(5)}/> &nbsp;
+            aspectID <input type="checkbox" checked = {selectedBookColumns[4]} onChange={() => handleBookCheckboxes(4)}/> &nbsp;
+            memoryID <input type="checkbox" checked = {selectedBookColumns[5]} onChange={() => handleBookCheckboxes(5)}/> &nbsp;
+            numenID <input type="checkbox" checked = {selectedBookColumns[6]} onChange={() => handleBookCheckboxes(6)}/> &nbsp;
        </div>
        </>
     );

@@ -14,7 +14,7 @@ function InputForm({ onItemsChange }) {
 
   const [selectedColumnsAllTable, setSelectedColumnsAllTable] = useState([
     [false, false, false, false, false, false, false, false],
-    [true, false, false, false, false, false]
+    [true, false, false, false, false, false, false]
   ]);
 
   let numenOnly = 0;
@@ -78,9 +78,12 @@ function InputForm({ onItemsChange }) {
       columnArr.push("language");
     }
     if (bookFilter[4]) {
-      columnArr.push("memoryID");
+      columnArr.push("aspectID");
     }
     if (bookFilter[5]) {
+      columnArr.push("memoryID");
+    }
+    if (bookFilter[6]) {
       columnArr.push("numenID");
     }
     selectedColumns = columnArr.join();
