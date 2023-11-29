@@ -9,6 +9,10 @@ router
   .post(peopleController.createPerson); 
 
 router
+  .route('/visitors')
+  .get(peopleController.getAllVisitors);
+
+router
   .route('/findByName/:name')
   .get(peopleController.getPersonByName);
 

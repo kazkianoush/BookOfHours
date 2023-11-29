@@ -12,9 +12,39 @@ class PeopleModel {
     static getPersonByID(ID) {
       return database.promise().query("SELECT * FROM People WHERE peopleID = ? OR peopleID LIKE ? ORDER BY peopleID ASC", [ID, `%${ID}%`]);
     }
+
+    static getAllVisitors() {
+      return database.promise().query(
+      `SELECT p.peopleName, s.skillName as language
+      FROM Visitor v, Language l, Skill s, People p
+      WHERE v.languageID = l.languageID
+      AND v.visitorID = p.peopleID
+      AND s.skillID = l.languageID;`
+      )
+    }
+
+    static getNonLanguageTeachingVisitors() {
+      return database.promise().query(
+      `SELECT p.peopleName
+      FROM Visitor v, People p
+      WHERE NOT EXISTS (
+          SELECT 1
+          FROM Language l
+          WHERE l.languageID != v.languageID
+      ) AND v.visitorID = p.peopleID;`
+      )
+    }
+
+    static getUniqueLanguageVisitor() {
+      return database.promise().query(
+      `SELECT v.languageID, COUNT(p.peopleName)
+      FROM Visitor v, People p
+      WHERE v.visitorID = p.peopleID AND v.languageID IS NOT NULL
+      GROUP BY v.languageID
+      HAVING COUNT(*) < 2;`
+      )
+    }
   
-
-
     static create(newPerson) {
       const { personID, personName} = newPerson;
   
