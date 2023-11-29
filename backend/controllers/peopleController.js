@@ -3,9 +3,26 @@ const People = require("../models/peopleModel");
 
 exports.getAllPeople = (async (req, res, next) => {
   try {
-    // const [allMemories] = await database.promise().query('SELECT * FROM Memory');
     const [allPeople] = await People.getAllPeople();
     res.status(200).json(allPeople);
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+  }
+});
+
+exports.getAllVisitors = (async (req, res, next) => {
+  try {
+    let allVisitors = [];
+    if (req.query.nonLanguageTeaching) {
+      [allVisitors] = await People.getNonLanguageTeachingVisitors();
+    } else if (req.query.uniqueLanguageVisitor) {
+      [allVisitors] = await People.getUniqueLanguageVisitor();
+    } else {
+      [allVisitors] = await People.getAllVisitors();
+    }
+    res.status(200).json(allVisitors);
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
@@ -37,7 +54,7 @@ exports.getPersonByID = (async (req, res, next) => {
   
 exports.createPerson = async (req, res, next) => {
   try {
-    const { personID, personName} = req.body;
+    const {personID, personName} = req.body;
 
     // Validate the incoming data as needed
 

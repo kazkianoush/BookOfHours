@@ -3,12 +3,14 @@ const Book = require("../models/bookModel");
 
 exports.getAllBooks = (async (req, res, next) => {
   try {
-    let allBooks = []
+    let options = {}
     if (req.query.selectedColumns) {
-      [allBooks] = await Book.getAllBooksProjection(req.query.selectedColumns);
-    } else {
-      [allBooks] = await Book.getAllBooks();
-    }
+      options.columns = req.query.selectedColumns
+    } else if (req.query.groupBy) {
+      options.groupBy = req.query.groupBy
+    } 
+
+    const [allBooks] = await Book.getBooks(options);
     res.status(200).json(allBooks);
   } catch (err) {
     if (!err.statusCode) {
@@ -17,17 +19,18 @@ exports.getAllBooks = (async (req, res, next) => {
   }
 });
 
-// getBook based on name with selectedColumns (projection) would look like this
-// localhost:3000/book/findByName/De Horis Book 2?selectedColumns=bookName,bookID,language
-// Needs to have 4 attributes minimum for the project
+// getBook based on name 
+// localhost:3000/book/findByName/De Horis Book 2
 exports.getBookName = (async (req, res, next) => {
   try {
-    let book = []
+    let options = {name: req.params.name}
     if (req.query.selectedColumns) {
-      [book] = await Book.getBookProjection(req.params.name, req.query.selectedColumns);
-    } else {
-      [book] = await Book.getBookByName(req.params.name);
-    }
+      options.columns = req.query.selectedColumns
+    } else if (req.query.groupBy) {
+      options.groupBy = req.query.groupBy
+    } 
+    console.log(options)
+    const [book] = await Book.getBooks(options);
     res.status(200).json(book);
 } catch (err) {
   if (!err.statusCode) {
@@ -38,10 +41,15 @@ exports.getBookName = (async (req, res, next) => {
 
 // getBook based on ID (for searching up on foreign keys)
 // localhost:3000/book/findByID/BK001
-// Needs to have 4 attributes minimum for the project
 exports.getBookByID = (async (req, res, next) => {
   try {
-    const [book] = await Book.getBookByID(req.params.id);
+    let options = {ID: req.params.id}
+    if (req.query.selectedColumns) {
+      options.columns = req.query.selectedColumns
+    } else if (req.query.groupBy) {
+      options.groupBy = req.query.groupBy
+    } 
+    const [book] = await Book.getBooks(options);
     res.status(200).json(book);
 } catch (err) {
   if (!err.statusCode) {
@@ -54,12 +62,13 @@ exports.getBookByID = (async (req, res, next) => {
 // localhost:3000/book/findByID/BK001
 exports.getbookByMemory = (async (req, res, next) => {
   try {
-    let book = []
-    if (req.query.groupby) {
-      [book] = await Book.getBookByMemoryGroupBy(req.params.memoryID, req.query.groupby);
-    } else {
-      [book] = await Book.getBookByMemory(req.params.memoryID);
-    }
+    let options = {memoryID: req.params.memoryID}
+    if (req.query.selectedColumns) {
+      options.columns = req.query.selectedColumns
+    } else if (req.query.groupBy) {
+      options.groupBy = req.query.groupBy
+    } 
+    const [book] = await Book.getBooks(options);
     res.status(200).json(book);
 } catch (err) {
   if (!err.statusCode) {
