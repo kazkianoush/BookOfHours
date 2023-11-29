@@ -8,6 +8,8 @@ class BookModel {
     if (options) {
       if (options.columns) {
         query = `SELECT ${options.columns} FROM Book`;
+      } else if (options.groupBy) {
+        query = `SELECT ${options.groupBy}, COUNT(*) as bookCount FROM Book`;
       }
 
       // search mode (by book name, by bookID, by memoryID associated with that book)
@@ -23,7 +25,7 @@ class BookModel {
       }
 
       if (options.groupBy) {
-        query += ` GROUP BY ${options.group}`;
+        query += ` GROUP BY ${options.groupBy}`;
       }
     }
     console.log(query, parameters)
