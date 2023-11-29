@@ -23,6 +23,7 @@ exports.getAllBooks = (async (req, res, next) => {
 exports.getBookName = (async (req, res, next) => {
   try {
     let book = []
+    console.log(req.query.selectedColumns)
     if (req.query.selectedColumns) {
       [book] = await Book.getBookProjection(req.params.name, req.query.selectedColumns);
     } else {

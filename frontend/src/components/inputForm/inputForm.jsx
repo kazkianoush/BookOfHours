@@ -28,6 +28,8 @@ function InputForm({ onItemsChange }) {
       elementOfTheSoulID:'',
       numenID:'',
   }
+  
+  let selectedColumns = "bookName,language,memoryID,numenID"
 
 
 
@@ -65,7 +67,26 @@ function InputForm({ onItemsChange }) {
       } catch (e) {
       console.log(e);
       }
-    } else {
+    } else if(selectedColumns){
+        try {
+          const allData = await Promise.all(['memory','book', 'people'].map(tableName =>
+            fetch(`http://localhost:3000/${tableName}${subUrl}?selectedColumns=${selectedColumns}`, { 
+                credentials: "include",
+    
+                method: "GET",
+    
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+               },
+              }).then(response => response.json())
+              )
+            );
+          onItemsChange(allData);
+        }catch (e) {
+          console.log(e);
+        }
+      } else {
         try {
           const allData = await Promise.all(['memory','book', 'people'].map(tableName =>
             fetch(`http://localhost:3000/${tableName}${subUrl}`, { 
@@ -77,7 +98,6 @@ function InputForm({ onItemsChange }) {
                   'Accept': 'application/json',
                   'Content-Type': 'application/json',
                },
-    
               }).then(response => response.json())
               )
             );
