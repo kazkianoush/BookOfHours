@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./styles.css";
 import FilterPanel from "./filterPanel";
+import AdvancedPanel from "./advancedPanel";
 
 function InputForm({ onItemsChange }) {
   const [query, setQuery] = useState("");
@@ -39,7 +40,7 @@ function InputForm({ onItemsChange }) {
   }
   
   let selectedColumns = "";
-  let initTableNames = ['memory','book', 'people']
+  let initTableNames = [`memory`,`book`, `people/visitors`]
   let tableNames = initTableNames;
 
   useEffect(() => {
@@ -325,7 +326,7 @@ function InputForm({ onItemsChange }) {
             <FilterPanel bookColumns = {handleFilterBookColumns}/>
             </div>
           <div id="advanced" className="advancedPanel">
-            Totally Working Advanced
+            <AdvancedPanel/>
             </div>
           <h2>INSERT</h2>
           {}

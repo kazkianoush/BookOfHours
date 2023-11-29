@@ -20,11 +20,11 @@ function OutputPanel(props) {
   }
   console.log(biggerArray);
   
-  let renderedTable = biggerArray.map(bigArray => {
+  let renderedTable = biggerArray.map((bigArray) => {
     if (bigArray.length == 0) return null;
     return(
       <>
-      <div className="tableName">{parseTableName(bigArray[0][0].field.substring(0, bigArray[0][0].field.length - 2))}</div>
+      <div className="tableName">{}</div>
       <table width={"100%"}>
         <thead>
           <tr>
@@ -55,15 +55,16 @@ function OutputPanel(props) {
   );
 }
 
-function parseTableName(string) {
-  console.log(string);
-  switch (string) {
-    case 'memory':
+function parseTableName(index) {
+  switch (index) {
+    case 0:
       return 'Memory';
-    case 'book':
+    case 1:
       return 'Book';
-    case 'people':
-      return 'People';
+    case 2:
+      return 'Visitors';
+    case 3:
+      return 'Assistants';
   }
 }
 
