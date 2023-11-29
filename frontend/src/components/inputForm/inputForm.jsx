@@ -18,7 +18,8 @@ function InputForm({ onItemsChange }) {
     [true, false, false, false, false, false, false]
   ]);
 
-  let numenOnly = 0;
+  // flags[numenOnly, groupAspect, languageSpokenByOne, visitorsNotTeachPlayerNewLanguage]
+  const [flags, setFlags] = useState(new Array(4).fill(false));
   
   let list = {
     memoryID: 'ME111', // Example values, replace with actual user input
@@ -94,9 +95,17 @@ function InputForm({ onItemsChange }) {
     return tableName != null;
   }
 
+  const handleAdvancedFlags = (advancedOptions) => {
+    let updatedFlags = [...flags];
+    advancedOptions.map((bool, index) => {
+      updatedFlags[index] = bool;
+    })
+    setFlags(updatedFlags);
+  }
+
   const fetchAPI = async (e, subUrl) => {
     e.preventDefault();
-    if (numenOnly) {
+    if (flags[0]) {
       try {
         const numenData = await fetch(`http://localhost:3000/numen` + subUrl, { 
           credentials: "include",
@@ -326,7 +335,7 @@ function InputForm({ onItemsChange }) {
             <FilterPanel bookColumns = {handleFilterBookColumns}/>
             </div>
           <div id="advanced" className="advancedPanel">
-            <AdvancedPanel/>
+            <AdvancedPanel advancedColumns = {handleAdvancedFlags}/>
             </div>
           <h2>INSERT</h2>
           {}

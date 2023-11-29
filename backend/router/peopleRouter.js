@@ -13,6 +13,10 @@ router
   .get(peopleController.getAllVisitors);
 
 router
+  .route('/visitors/findByName/:name')
+  .get(peopleController.getVisitorByName);
+
+router
   .route('/findByName/:name')
   .get(peopleController.getPersonByName);
 

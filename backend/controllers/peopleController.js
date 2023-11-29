@@ -29,6 +29,17 @@ exports.getAllVisitors = (async (req, res, next) => {
     }
   }
 });
+
+exports.getVisitorByName = (async (req, res, next) => {
+  try {
+    const [person] = await People.getVisitorByName(req.params.name);
+    res.status(200).json(person);
+} catch (err) {
+  if (!err.statusCode) {
+    err.statusCode = 500;
+  }
+}
+});
   
 exports.getPersonByName = (async (req, res, next) => {
   try {

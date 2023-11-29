@@ -23,6 +23,17 @@ class PeopleModel {
       )
     }
 
+    static getVisitorByName(name) {
+      return database.promise().query(
+        `SELECT p.peopleName, s.skillName as language
+        FROM Visitor v, Language l, Skill s, People p
+        WHERE v.languageID = l.languageID
+        AND v.visitorID = p.peopleID
+        AND s.skillID = l.languageID
+        AND p.peopleName LIKE ?;`, [`%${name}%`]
+        )
+    }
+
     static getNonLanguageTeachingVisitors() {
       return database.promise().query(
       `SELECT p.peopleName
