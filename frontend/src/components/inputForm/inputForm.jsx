@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./styles.css";
+import FilterPanel from "./filterPanel";
 
 function InputForm({ onItemsChange }) {
   const [query, setQuery] = useState("");
@@ -7,6 +8,14 @@ function InputForm({ onItemsChange }) {
   const [insertInput, setInsertInput] = useState("");
   const [updateInput, setUpdateInput] = useState("");
   const [bookIDInput, setBookIDInput] = useState("");
+
+  const [filterPanelOpen, setFilterPanel] = useState(true);
+  const [advancedPanelOpen, setAdvancedPanel] = useState(true);
+
+  const [selectedColumnsAllTable, setSelectedColumnsAllTable] = useState([
+    [false, false, false, false, false, false, false, false],
+    [true, false, false, false, false, false]
+  ]);
 
   let numenOnly = 0;
   
@@ -28,8 +37,10 @@ function InputForm({ onItemsChange }) {
       elementOfTheSoulID:'',
       numenID:'',
   }
-
-
+  
+  let selectedColumns = "";
+  let initTableNames = ['memory','book', 'people']
+  let tableNames = initTableNames;
 
   useEffect(() => {
     console.log("Items updated:", items);
@@ -38,6 +49,8 @@ function InputForm({ onItemsChange }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    handleSelectedColumns();
+    tableNames = initTableNames.filter(filterTableName);
     let subUrl = ``;
 
     if (query != "") {
@@ -45,6 +58,39 @@ function InputForm({ onItemsChange }) {
     }
     fetchAPI(e, subUrl);
   };
+
+  const handleSelectedColumns = () => {
+    const bookFilter = selectedColumnsAllTable[1];
+    console.log(bookFilter);
+    const columnArr = [];
+    if (bookFilter[0]) {
+      tableNames[1] = 'book';
+    } else {
+      tableNames[1] = null;
+    }
+    if (bookFilter[1]) {
+      columnArr.push("bookID");
+    }
+    if (bookFilter[2]) {
+      columnArr.push("bookName");
+    }
+    if (bookFilter[3]) {
+      columnArr.push("language");
+    }
+    if (bookFilter[4]) {
+      columnArr.push("memoryID");
+    }
+    if (bookFilter[5]) {
+      columnArr.push("numenID");
+    }
+    selectedColumns = columnArr.join();
+    console.log(tableNames);
+    console.log(selectedColumns);
+  }
+
+  const filterTableName = (tableName) => {
+    return tableName != null;
+  }
 
   const fetchAPI = async (e, subUrl) => {
     e.preventDefault();
@@ -65,9 +111,26 @@ function InputForm({ onItemsChange }) {
       } catch (e) {
       console.log(e);
       }
-    } else {
+    } else if(selectedColumns){
         try {
-          const allData = await Promise.all(['memory','book', 'people'].map(tableName =>
+          const allData = await Promise.all(tableNames.map(tableName =>
+              fetch(`http://localhost:3000/${tableName}${subUrl}?selectedColumns=${selectedColumns}`, { 
+                credentials: "include",
+    
+                method: "GET",
+    
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+               },
+              }).then(response => response.json())));
+          onItemsChange(allData);
+        }catch (e) {
+          console.log(e);
+        }
+      } else {
+        try {
+          const allData = await Promise.all(tableNames.map(tableName =>
             fetch(`http://localhost:3000/${tableName}${subUrl}`, { 
                 credentials: "include",
     
@@ -77,7 +140,6 @@ function InputForm({ onItemsChange }) {
                   'Accept': 'application/json',
                   'Content-Type': 'application/json',
                },
-    
               }).then(response => response.json())
               )
             );
@@ -90,12 +152,32 @@ function InputForm({ onItemsChange }) {
 
 
   const handleFilterClick = () => {
-    const filterPanel = document.getElementsByClassName('filterPanel');
-    
+    const filterPanel = document.getElementById('filter');
+    setFilterPanel(!filterPanelOpen);
+    if (filterPanelOpen) {
+      filterPanel.style.display = 'block';
+    } else {
+      filterPanel.style.display = 'none';
+    }
+  }
+
+  const handleFilterBookColumns = (filteredColumns) => {
+    let updatedState = [...selectedColumnsAllTable];
+    filteredColumns.map((state, i) => {
+      updatedState[1][i] = state;
+    })
+    setSelectedColumnsAllTable(updatedState);
+    console.log(updatedState);
   }
 
   const handleAdvancedClick = () => {
-    // 
+    const advancedPanel = document.getElementById('advanced');
+    setAdvancedPanel(!advancedPanelOpen);
+    if (advancedPanelOpen) {
+      advancedPanel.style.display = 'block';
+    } else {
+      advancedPanel.style.display = 'none';
+    }
   }
 
   const handleSubmitINSERT = (e) => {
@@ -240,8 +322,12 @@ function InputForm({ onItemsChange }) {
              <button className="col" type="button" onClick={handleFilterClick}>Filter</button>
              <button className="col" type="button" onClick={handleAdvancedClick}>Advanced</button>
           </form>
-          <div className="filterPanel">Totally Working Filter</div>
-          <div className="advancedPanel">Totally Working Advanced</div>
+          <div id="filter" className="filterPanel">
+            <FilterPanel bookColumns = {handleFilterBookColumns}/>
+            </div>
+          <div id="advanced" className="advancedPanel">
+            Totally Working Advanced
+            </div>
           <h2>INSERT</h2>
           {}
           <form onSubmit={handleSubmitINSERT}>
