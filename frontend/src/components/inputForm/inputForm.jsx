@@ -41,7 +41,7 @@ function InputForm({ onItemsChange }) {
   }
   
   let selectedColumns = "";
-  let initTableNames = [`memory`,`book`, `people/visitors`]
+  let initTableNames = [`memory`,`book`, `people/visitors`, `people/assistants`]
   let tableNames = initTableNames;
 
   const sanitizeInput = (str) => {

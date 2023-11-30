@@ -66,6 +66,27 @@ class PeopleModel {
       HAVING COUNT(*) < 2;`
       )
     }
+
+    static getAllAssistants() {
+      return database.promise().query(
+        `SELECT a.assistantID, p.peopleName as assistantName, a.assistantSpecialty, a.assistantCost, a.assistantLocation
+         FROM Assistant a, People p
+         WHERE a.assistantID = p.peopleID
+        `
+      )
+    }
+
+    // Return the location of the assistants ingame where their cost is higher than the average cost 
+    // to all assistants from all locations in the game (too long to put in function name)
+    static getAllAssistantsNestedAggregationWithGroupBy() {
+      return database.promise().query(
+        `SELECT a.assistantLocation, AVG(a.assistantCost)
+        FROM Assistant a
+        WHERE a.assistantCost > (SELECT AVG(assistantCost) FROM Assistant)
+        GROUP BY a.assistantLocation;    
+        `
+      )
+    }
   
     static create(newPerson) {
       const { personID, personName} = newPerson;
