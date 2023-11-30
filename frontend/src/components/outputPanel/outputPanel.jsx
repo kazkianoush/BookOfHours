@@ -38,7 +38,7 @@ function OutputPanel(props) {
       {bigArray.map((row, rowIndex) => (
         <tr key={rowIndex}>
           {row.map((cell, cellIndex) => (
-            <td key={cellIndex}>{parseTableValue(cell.value)}</td>
+            <td key={cellIndex}>{cell.value}</td>
           ))}
         </tr>
       ))}
@@ -55,26 +55,26 @@ function OutputPanel(props) {
   );
 }
 
-function parseTableName(index) {
-  switch (index) {
-    case 0:
-      return 'Memory';
-    case 1:
-      return 'Book';
-    case 2:
-      return 'Visitors';
-    case 3:
-      return 'Assistants';
-  }
-}
+// function parseTableName(index) {
+//   switch (index) {
+//     case 0:
+//       return 'Memory';
+//     case 1:
+//       return 'Book';
+//     case 2:
+//       return 'Visitors';
+//     case 3:
+//       return 'Assistants';
+//   }
+// }
 
-function parseTableValue(string) {
-  if (string == '0') {
-    return 'False';
-  } else if (string == '1') {
-    return 'True';
-  } else
-    return string;
-}
+// function parseTableValue(string) {
+//   if (string == '0') {
+//     return 'False';
+//   } else if (string == '1') {
+//     return 'True';
+//   } else
+//     return string;
+// }
 
 export default OutputPanel;

@@ -103,6 +103,27 @@ function InputForm({ onItemsChange }) {
     setFlags(updatedFlags);
   }
 
+  const handleAdvancedSubmit = async (memoryString) => {
+    let subUrl = ``;
+    if (memoryString) subUrl = `/findByMemory/` + memoryString;
+    try {
+      const data = await fetch(`http://localhost:3000/book` + subUrl + `?groupBy=aspectID`, { 
+        credentials: "include",
+
+        method: "GET",
+
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+       },
+
+      }).then(response => response.json())
+      onItemsChange([data]);
+    } catch (e) {
+    console.log(e);
+    }
+  }
+
   const fetchAPI = async (e, subUrl) => {
     e.preventDefault();
     if (flags[0]) {
@@ -335,7 +356,7 @@ function InputForm({ onItemsChange }) {
             <FilterPanel bookColumns = {handleFilterBookColumns}/>
             </div>
           <div id="advanced" className="advancedPanel">
-            <AdvancedPanel advancedColumns = {handleAdvancedFlags}/>
+            <AdvancedPanel advancedColumns = {handleAdvancedFlags} memoryInput = {handleAdvancedSubmit}/>
             </div>
           <h2>INSERT</h2>
           {}

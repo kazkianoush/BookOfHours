@@ -1,15 +1,9 @@
-import { useState } from "react";
+import { memo, useState } from "react";
 
 
 function AdvancedPanel(props) {
     const [advancedOptions, setAdvancedOptions] = useState(new Array(4).fill(false));
     const [memoryString, setMemoryString] = useState("");
-
-
-    // const handleNumenOnlyCheckbox = () => {
-    //     advancedOptions[0] = !advancedOptions[0];
-    //     props.advancedColumns(advancedOptions);
-    // }
     
     const handleAdvancedPanelCheckboxes = (index) => {
         const updatedAdvancedOptions = advancedOptions;
@@ -30,28 +24,11 @@ function AdvancedPanel(props) {
         props.advancedColumns(advancedOptions);
     }
 
-    // const handleGroupAspectCheckbox = () => {
-    //     advancedOptions[1] = !advancedOptions[1];
-    //     const memField = document.getElementById('memField');
-    //     if (advancedOptions[1]) {
-    //         memField.disabled = false;
-    //     } else {
-    //         memField.disabled = true;
-    //     }
-    //     props.advancedColumns(advancedOptions);
-    //     console.log(advancedOptions);
-    // }
-
-    // const handleLanguageSpokeByOneCheckbox = () => {
-    //     advancedOptions[2] = !advancedOptions[2];
-    //     props.advancedColumns(advancedOptions);
-
-    // }
-
-    // const handleVisitorNotTeachNewLanguageCheckbox = () => {
-    //     advancedOptions[3] = !advancedOptions[3];
-    //     props.advancedColumns(advancedOptions);
-    // }
+    const handleCountBookForMemory = (e) => {
+        e.preventDefault()
+        console.log(memoryString);
+        props.memoryInput(memoryString);
+    }
 
     return (
         <>
@@ -62,7 +39,12 @@ function AdvancedPanel(props) {
         <div>Book: &nbsp;
              Group aspect requirement <input type="checkbox" id = "groupCheckbox" checked ={advancedOptions[1]} onChange={() => handleAdvancedPanelCheckboxes(1)}/> &nbsp;
              {/* should not be opened until the checkbox is ticked */}
-             Count the books that unlocks memory: <input id="memField" disabled/> &nbsp;
+             Count the books that unlocks memory: 
+             <form  onSubmit={(e) => handleCountBookForMemory(e)}>
+                <input id="memField" value = {memoryString} onChange={(e) => setMemoryString(e.target.value)} 
+                disabled/>
+             </form>
+               &nbsp;
         </div>
         <div>Visitors: &nbsp;
             Show languages spoken by only 1 visitor <input type="checkbox" checked ={advancedOptions[2]} onChange={() => handleAdvancedPanelCheckboxes(2)} /> &nbsp;
