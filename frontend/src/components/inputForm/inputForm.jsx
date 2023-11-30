@@ -22,7 +22,7 @@ function InputForm({ onItemsChange }) {
   const [flags, setFlags] = useState(new Array(4).fill(false));
   
   let list = {
-    memoryID: 'ME111', // Example values, replace with actual user input
+    memoryID: 'ME111',
     memoryName: 'Memory: Taste hellooo',
     memorySources: 'Considering sustenance and beverages',
     memoryIsSound: 0,
@@ -240,16 +240,14 @@ function InputForm({ onItemsChange }) {
 
   const handleSubmitINSERT = (e) => {
     e.preventDefault();
-    console.log(insertInput);
     let cleanInsertInput = sanitizeInput(insertInput);
-    console.log(cleanInsertInput);
     // Split the input value by commas and assign to list properties
     const values = cleanInsertInput.split(",").map((value) => value.trim());
     if (values[0].length != 5 && values[0].length != 0)  {
       alert("That is not valid insertion");
       return;
     }
- 
+    
     list = {
       ...list,
       memoryID: values[0] || list.memoryID,
@@ -262,13 +260,13 @@ function InputForm({ onItemsChange }) {
     };
     listBook = {
       ...listBook,
-      bookID: values[0] || list.memoryID,
-      bookName: values[1] || list.memoryName,
-      language: values[2] || list.memorySources.substring(0, 20),
-      aspectID: values[3] || list.memoryIsSound,
-      memoryID: values[4] || list.memoryIsOmen,
-      elementOfTheSoulID: values[5] || list.memoryIsPersistent,
-      numenID: values[6] || list.memoryIsWeather,
+      bookID: values[0] || listBook.bookID,
+      bookName: values[1] || listBook.bookName,
+      language: values[2] || listBook.language,
+      aspectID: values[3] || listBook.aspectID,
+      memoryID: values[4] || listBook.memoryID,
+      elementOfTheSoulID: values[5] || listBook.elementOfTheSoulID,
+      numenID: values[6] || listBook.numenID,
     };
     fetchAPIInsert(listBook);
   };
@@ -315,13 +313,13 @@ function InputForm({ onItemsChange }) {
 
     listBook = {
       ...listBook,
-      bookID: values[0] || list.memoryID,
-      bookName: values[1] || list.memoryName,
-      language: values[2] || list.memorySources,
-      aspectID: values[3] || list.memoryIsSound,
-      memoryID: values[4] || list.memoryIsOmen,
-      elementOfTheSoulID: values[5] || list.memoryIsPersistent,
-      numenID: values[6] || list.memoryIsWeather,
+      bookID: values[0] || listBook.bookID,
+      bookName: values[1] || listBook.bookName,
+      language: values[2] || listBook.language,
+      aspectID: values[3] || listBook.aspectID,
+      memoryID: values[4] || listBook.memoryID,
+      elementOfTheSoulID: values[5] || listBook.elementOfTheSoulID,
+      numenID: values[6] || listBook.numenID,
     };
     fetchAPIUpdate(listBook);
   };

@@ -38,8 +38,8 @@ class BookModel {
     const newID = parseInt(latestBookEntry[0].bookID.slice(2,5)) + 1
     const newBookID = `BK${String(newID).padStart(3, '0')}`
 
-    return database.promise().query('INSERT INTO Book(bookID, bookName, language, aspectID, memoryID, elementOfTheSoulID, numenID) VALUES (?, ?, ?, NULL, ?, NULL, NULL)'
-    , [newBookID, input.bookName, input.language, input.memoryID]);
+    return database.promise().query('INSERT INTO Book(bookID, bookName, language, aspectID, memoryID, elementOfTheSoulID, numenID) VALUES (?, ?, ?, ?, ?, NULL, NULL)'
+    , [newBookID, input.bookName, input.language, input.aspectID, input.memoryID]);
   }
 
   static async update(bookID, updatedData) {

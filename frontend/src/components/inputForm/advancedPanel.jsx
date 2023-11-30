@@ -9,7 +9,6 @@ function AdvancedPanel(props) {
     const handleAdvancedPanelCheckboxes = (index) => {
         const updatedAdvancedOptions = advancedOptions;
         updatedAdvancedOptions[index] = !updatedAdvancedOptions[index];
-        console.log(updatedAdvancedOptions);
         switch (index) {
             case 1: {
                     const memField = document.getElementById('memField');
