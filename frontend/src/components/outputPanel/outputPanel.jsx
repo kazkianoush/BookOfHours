@@ -2,11 +2,16 @@ import React from "react";
 import "./styles.css"
 
 function OutputPanel(props) {
+  let isEmpty = []
   for (let i = 0; i < props.data.length; i++) {
-    if (props.data[i].length == 0 && i == props.data.length - 1) {
-      return (<div height = "auto" width = "100%" style={{backgroundColor: "#313338", textAlign: "center"}}>{"No data found"}</div>);
+    if (props.data[i].length == 0) {
+      isEmpty.push(true);
+    } else {
+      isEmpty.push(false);
     }
   }
+  if (!isEmpty.includes(false)) return (<div height = "auto" width = "100%" style={{backgroundColor: "#313338", textAlign: "center"}}>{"No data found"}</div>);
+
   let biggerArray = [];
   for (let j = 0; j < props.data.length; j++){
     let bigArray = [];
