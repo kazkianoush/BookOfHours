@@ -40,6 +40,18 @@ exports.getVisitorByName = (async (req, res, next) => {
   }
 }
 });
+
+exports.getVisitorByLanguage = (async (req, res, next) => {
+  console.log(req.params);
+  try {
+    const [person] = await People.getVisitorByLanguage(req.params.languageName);
+    res.status(200).json(person);
+} catch (err) {
+  if (!err.statusCode) {
+    err.statusCode = 500;
+  }
+}
+});
   
 exports.getPersonByName = (async (req, res, next) => {
   try {

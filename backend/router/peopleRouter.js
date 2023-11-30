@@ -22,6 +22,10 @@ router
 
 router
   .route('/findByID/:id')
-  .get(peopleController.getPersonByID)
+  .get(peopleController.getPersonByID);
+
+router
+  .route('/visitors/findByLanguage/:languageName')
+  .get(peopleController.getVisitorByLanguage);
   
 module.exports = router;

@@ -44,6 +44,10 @@ function InputForm({ onItemsChange }) {
   let initTableNames = [`memory`,`book`, `people/visitors`]
   let tableNames = initTableNames;
 
+  const sanitizeInput = (str) => {
+    return str.replace(/[`~!@#$%^&*_|+\-=?;:'.]/gi, "");
+  }
+
   useEffect(() => {
     console.log("Items updated:", items);
     onItemsChange(items);
@@ -54,9 +58,9 @@ function InputForm({ onItemsChange }) {
     handleSelectedColumns();
     tableNames = initTableNames.filter(filterTableName);
     let subUrl = ``;
-
-    if (query != "") {
-      subUrl = `/findByName/${query}`;
+    let cleanQuery = sanitizeInput(query);
+    if (cleanQuery != "") {
+      subUrl = `/findByName/${cleanQuery}`;
     }
     fetchAPI(e, subUrl);
   };
@@ -103,11 +107,34 @@ function InputForm({ onItemsChange }) {
     setFlags(updatedFlags);
   }
 
-  const handleAdvancedSubmit = async (memoryString) => {
+  const handleAdvancedBookSubmit = async (memoryString) => {
     let subUrl = ``;
-    if (memoryString) subUrl = `/findByMemory/` + memoryString;
+    let cleanMemoryString = sanitizeInput(memoryString);
+    if (cleanMemoryString) subUrl = `/findByMemory/` + cleanMemoryString;
     try {
       const data = await fetch(`http://localhost:3000/book` + subUrl + `?groupBy=aspectID`, { 
+        credentials: "include",
+
+        method: "GET",
+
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+       },
+
+      }).then(response => response.json())
+      onItemsChange([data]);
+    } catch (e) {
+    console.log(e);
+    }
+  }
+
+  const handleAdvancedVisitorSubmit = async (languageString) => {
+    let subUrl = ``;
+    let cleanLanguageString = sanitizeInput(languageString);
+    if (cleanLanguageString) subUrl = `/findByLanguage/` + cleanLanguageString;
+    try {
+      const data = await fetch(`http://localhost:3000/people/visitors` + subUrl, { 
         credentials: "include",
 
         method: "GET",
@@ -213,8 +240,16 @@ function InputForm({ onItemsChange }) {
 
   const handleSubmitINSERT = (e) => {
     e.preventDefault();
+    console.log(insertInput);
+    let cleanInsertInput = sanitizeInput(insertInput);
+    console.log(cleanInsertInput);
     // Split the input value by commas and assign to list properties
-    const values = insertInput.split(",").map((value) => value.trim());
+    const values = cleanInsertInput.split(",").map((value) => value.trim());
+    if (values[0].length != 5 && values[0].length != 0)  {
+      alert("That is not valid insertion");
+      return;
+    }
+ 
     list = {
       ...list,
       memoryID: values[0] || list.memoryID,
@@ -229,7 +264,7 @@ function InputForm({ onItemsChange }) {
       ...listBook,
       bookID: values[0] || list.memoryID,
       bookName: values[1] || list.memoryName,
-      language: values[2] || list.memorySources,
+      language: values[2] || list.memorySources.substring(0, 20),
       aspectID: values[3] || list.memoryIsSound,
       memoryID: values[4] || list.memoryIsOmen,
       elementOfTheSoulID: values[5] || list.memoryIsPersistent,
@@ -265,6 +300,7 @@ function InputForm({ onItemsChange }) {
   const handleSubmitUPDATE = (e) => {
     e.preventDefault();
     // Split the input value by commas and assign to list properties
+
     const values = updateInput.split(",").map((value) => value.trim());
     list = {
       ...list,
@@ -356,7 +392,8 @@ function InputForm({ onItemsChange }) {
             <FilterPanel bookColumns = {handleFilterBookColumns}/>
             </div>
           <div id="advanced" className="advancedPanel">
-            <AdvancedPanel advancedColumns = {handleAdvancedFlags} memoryInput = {handleAdvancedSubmit}/>
+            <AdvancedPanel advancedColumns = {handleAdvancedFlags} memoryInput = {handleAdvancedBookSubmit}
+            languageInput = {handleAdvancedVisitorSubmit}/>
             </div>
           <h2>INSERT</h2>
           {}
