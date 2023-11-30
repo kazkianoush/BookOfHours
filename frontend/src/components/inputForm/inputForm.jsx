@@ -34,7 +34,7 @@ function InputForm({ onItemsChange }) {
       bookID:'',
       bookName : '',
       language:'',
-      aspectID:'',
+      aspectID:'AS001',
       memoryID:'',
       elementOfTheSoulID:'',
       numenID:'',
