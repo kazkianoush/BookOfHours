@@ -40,6 +40,40 @@ exports.getVisitorByName = (async (req, res, next) => {
   }
 }
 });
+
+exports.getVisitorByLanguage = (async (req, res, next) => {
+  console.log(req.params);
+  try {
+    const [person] = await People.getVisitorByLanguage(req.params.languageName);
+    res.status(200).json(person);
+} catch (err) {
+  if (!err.statusCode) {
+    err.statusCode = 500;
+  }
+}
+});
+
+exports.getAllAssistants = (async (req, res, next) => {
+  try {
+    const [allAssistants] = await People.getAllAssistants();
+    res.status(200).json(allAssistants);
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+  }
+});
+
+exports.getAllAssistantsNestedAggregationWithGroupBy = (async (req, res, next) => {
+  try {
+    const [location] = await People.getAllAssistantsNestedAggregationWithGroupBy();
+    res.status(200).json(location);
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+  }
+});
   
 exports.getPersonByName = (async (req, res, next) => {
   try {

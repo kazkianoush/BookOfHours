@@ -1,5 +1,6 @@
 const express = require('express');
 const peopleController = require('../controllers/peopleController'); 
+const { route } = require('./peopleRouter');
 
 const router = express.Router();
 
@@ -22,6 +23,18 @@ router
 
 router
   .route('/findByID/:id')
-  .get(peopleController.getPersonByID)
+  .get(peopleController.getPersonByID);
+
+router
+  .route('/visitors/findByLanguage/:languageName')
+  .get(peopleController.getVisitorByLanguage);
+
+router
+  .route('/assistants')
+  .get(peopleController.getAllAssistants);
+
+router
+  .route('/assistants/aggregated')
+  .get(peopleController.getAllAssistantsNestedAggregationWithGroupBy);
   
 module.exports = router;

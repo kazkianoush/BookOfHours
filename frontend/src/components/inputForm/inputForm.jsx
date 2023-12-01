@@ -25,7 +25,7 @@ function InputForm({ onItemsChange }) {
   let numenOnly = 0;
   
   let list = {
-    memoryID: 'ME111', // Example values, replace with actual user input
+    memoryID: 'ME111',
     memoryName: 'Memory: Taste hellooo',
     memorySources: 'Considering sustenance and beverages',
     memoryIsSound: 0,
@@ -37,16 +37,20 @@ function InputForm({ onItemsChange }) {
       bookID:'',
       bookName : '',
       language:'',
-      aspectID:'',
+      aspectID:'AS001',
       memoryID:'',
       elementOfTheSoulID:'',
       numenID:'',
   }
   
   let selectedColumns = "";
-  let initTableNames = [`memory`,`book`, `people/visitors`]
+  let initTableNames = [`memory`,`book`, `people/visitors`, `people/assistants`]
   let tableNames = initTableNames;
   let one = ['one'];
+
+  const sanitizeInput = (str) => {
+    return str.replace(/[`~!@#$%^&*_|+\-=?;:'.]/gi, "");
+  }
 
   useEffect(() => {
     console.log("Items updated:", items);
@@ -58,9 +62,9 @@ function InputForm({ onItemsChange }) {
     handleSelectedColumns();
     tableNames = initTableNames.filter(filterTableName);
     let subUrl = ``;
-
-    if (query != "") {
-      subUrl = `/findByName/${query}`;
+    let cleanQuery = sanitizeInput(query);
+    if (cleanQuery != "") {
+      subUrl = `/findByName/${cleanQuery}`;
     }
     fetchAPI(e, subUrl);
   };
@@ -108,6 +112,57 @@ function InputForm({ onItemsChange }) {
     return tableName != null;
   }
 
+  const handleAdvancedFlags = (advancedOptions) => {
+    let updatedFlags = [...flags];
+    advancedOptions.map((bool, index) => {
+      updatedFlags[index] = bool;
+    })
+    setFlags(updatedFlags);
+  }
+
+  const handleAdvancedBookSubmit = async (memoryString) => {
+    let subUrl = ``;
+    let cleanMemoryString = sanitizeInput(memoryString);
+    if (cleanMemoryString) subUrl = `/findByMemory/` + cleanMemoryString;
+    try {
+      const data = await fetch(`http://localhost:3000/book` + subUrl + `?groupBy=aspectID`, { 
+        credentials: "include",
+
+        method: "GET",
+
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+       },
+
+      }).then(response => response.json())
+      onItemsChange([data]);
+    } catch (e) {
+    console.log(e);
+    }
+  }
+
+  const handleAdvancedVisitorSubmit = async (languageString) => {
+    let subUrl = ``;
+    let cleanLanguageString = sanitizeInput(languageString);
+    if (cleanLanguageString) subUrl = `/findByLanguage/` + cleanLanguageString;
+    try {
+      const data = await fetch(`http://localhost:3000/people/visitors` + subUrl, { 
+        credentials: "include",
+
+        method: "GET",
+
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+       },
+
+      }).then(response => response.json())
+      onItemsChange([data]);
+    } catch (e) {
+    console.log(e);
+    }
+  }
   const fetchAPI = async (e, subUrl) => {
     e.preventDefault();
     if (numenOnly) {
@@ -242,8 +297,14 @@ function InputForm({ onItemsChange }) {
 
   const handleSubmitINSERT = (e) => {
     e.preventDefault();
+    let cleanInsertInput = sanitizeInput(insertInput);
     // Split the input value by commas and assign to list properties
-    const values = insertInput.split(",").map((value) => value.trim());
+    const values = cleanInsertInput.split(",").map((value) => value.trim());
+    if (values[0].length != 5 && values[0].length != 0)  {
+      alert("That is not valid insertion");
+      return;
+    }
+    
     list = {
       ...list,
       memoryID: values[0] || list.memoryID,
@@ -256,13 +317,13 @@ function InputForm({ onItemsChange }) {
     };
     listBook = {
       ...listBook,
-      bookID: values[0] || list.memoryID,
-      bookName: values[1] || list.memoryName,
-      language: values[2] || list.memorySources,
-      aspectID: values[3] || list.memoryIsSound,
-      memoryID: values[4] || list.memoryIsOmen,
-      elementOfTheSoulID: values[5] || list.memoryIsPersistent,
-      numenID: values[6] || list.memoryIsWeather,
+      bookID: values[0] || listBook.bookID,
+      bookName: values[1] || listBook.bookName,
+      language: values[2] || listBook.language,
+      aspectID: values[3] || listBook.aspectID,
+      memoryID: values[4] || listBook.memoryID,
+      elementOfTheSoulID: values[5] || listBook.elementOfTheSoulID,
+      numenID: values[6] || listBook.numenID,
     };
     fetchAPIInsert(listBook);
   };
@@ -294,6 +355,7 @@ function InputForm({ onItemsChange }) {
   const handleSubmitUPDATE = (e) => {
     e.preventDefault();
     // Split the input value by commas and assign to list properties
+
     const values = updateInput.split(",").map((value) => value.trim());
     list = {
       ...list,
@@ -308,13 +370,13 @@ function InputForm({ onItemsChange }) {
 
     listBook = {
       ...listBook,
-      bookID: values[0] || list.memoryID,
-      bookName: values[1] || list.memoryName,
-      language: values[2] || list.memorySources,
-      aspectID: values[3] || list.memoryIsSound,
-      memoryID: values[4] || list.memoryIsOmen,
-      elementOfTheSoulID: values[5] || list.memoryIsPersistent,
-      numenID: values[6] || list.memoryIsWeather,
+      bookID: values[0] || listBook.bookID,
+      bookName: values[1] || listBook.bookName,
+      language: values[2] || listBook.language,
+      aspectID: values[3] || listBook.aspectID,
+      memoryID: values[4] || listBook.memoryID,
+      elementOfTheSoulID: values[5] || listBook.elementOfTheSoulID,
+      numenID: values[6] || listBook.numenID,
     };
     fetchAPIUpdate(listBook);
   };
@@ -385,7 +447,8 @@ function InputForm({ onItemsChange }) {
             <FilterPanel bookColumns = {handleFilterBookColumns}/>
             </div>
           <div id="advanced" className="advancedPanel">
-            <AdvancedPanel advancedColumns = {handleAdvancedFlags}/>
+            <AdvancedPanel advancedColumns = {handleAdvancedFlags} memoryInput = {handleAdvancedBookSubmit}
+            languageInput = {handleAdvancedVisitorSubmit}/>
             </div>
           <h2>INSERT</h2>
           {}

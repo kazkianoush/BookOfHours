@@ -107,7 +107,8 @@ CREATE TABLE IF NOT EXISTS `Book` (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Numen` (
     `numenID` VARCHAR(20) NOT NULL,
-    `bookID` VARCHAR(20) NOT NULL,
+    `memoryID` VARCHAR(20) NULL,
+    `bookID` VARCHAR(20) NULL,
     PRIMARY KEY (`numenID`),
     FOREIGN KEY (`numenID`)
         REFERENCES `Memory` (`memoryID`)
@@ -138,11 +139,13 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `WorkshopAspectRequirement` (
     `workshopAspectRequirementID` VARCHAR(20) NOT NULL,
+    `aspectID` VARCHAR(20) NULL,
+    `workstationID` VARCHAR(20) NULL,
     PRIMARY KEY (`workshopAspectRequirementID`),
-    FOREIGN KEY (`workshopAspectRequirementID`)
+    FOREIGN KEY (`aspectID`)
         REFERENCES `Aspect` (`aspectID`)
         ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (`workshopAspectRequirementID`)
+    FOREIGN KEY (`workstationID`)
         REFERENCES `Workstation` (`workstationID`)
         ON DELETE CASCADE ON UPDATE CASCADE
 )  ENGINE=INNODB;

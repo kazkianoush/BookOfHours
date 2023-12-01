@@ -1,14 +1,14 @@
-import { memo, useState } from "react";
+import { useState } from "react";
 
 
 function AdvancedPanel(props) {
     const [advancedOptions, setAdvancedOptions] = useState(new Array(5).fill(false));
     const [memoryString, setMemoryString] = useState("");
+    const [languageString, setLanguageString] = useState("");
     
     const handleAdvancedPanelCheckboxes = (index) => {
         const updatedAdvancedOptions = advancedOptions;
         updatedAdvancedOptions[index] = !updatedAdvancedOptions[index];
-        console.log(updatedAdvancedOptions);
         switch (index) {
             case 1: {
                     const memField = document.getElementById('memField');
@@ -25,16 +25,20 @@ function AdvancedPanel(props) {
     }
 
     const handleCountBookForMemory = (e) => {
-        e.preventDefault()
-        console.log(memoryString);
+        e.preventDefault();
         props.memoryInput(memoryString);
+    }
+
+    const handleFindVisitorByLanguage = (e) => {
+        e.preventDefault();
+        props.languageInput(languageString);
     }
 
     return (
         <>
         <div>Allows special views of the data</div>
         <div>Memory: &nbsp;
-             Numen only <input key = {Math.random()} type="checkbox" checked = {advancedOptions[0] == true} onChange={() => handleAdvancedPanelCheckboxes(0)}/> &nbsp;
+             Numen only <input type="checkbox" checked = {advancedOptions[0] == true} onChange={() => handleAdvancedPanelCheckboxes(0)}/> &nbsp;
         </div>
         <div>Visitors: &nbsp;
             Show languages spoken by only 1 visitor <input type="checkbox" checked ={advancedOptions[2]} onChange={() => handleAdvancedPanelCheckboxes(2)} /> &nbsp;
@@ -54,7 +58,16 @@ function AdvancedPanel(props) {
              </form>
                &nbsp;
         </div>
-        
+        <div>Visitors: &nbsp;
+            Show languages spoken by only 1 visitor <input type="checkbox" checked ={advancedOptions[2]} onChange={() => handleAdvancedPanelCheckboxes(2)} /> &nbsp;
+            Show visitors that don&apos;t teach player a new language  <input type="checkbox" checked ={advancedOptions[3]} onChange={() => handleAdvancedPanelCheckboxes(3)}/> &nbsp;
+            <div>
+            Find visitor by language they teach 
+            <form onSubmit={(e) => handleFindVisitorByLanguage(e)}>
+                <input value={languageString} onChange={(e) => setLanguageString(e.target.value)}></input>
+            </form>
+            </div>
+        </div>
         </>
     );
 }
