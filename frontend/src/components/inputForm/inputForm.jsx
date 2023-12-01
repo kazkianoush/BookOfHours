@@ -165,6 +165,25 @@ function InputForm({ onItemsChange }) {
         console.log(e);
       }
 
+    } else if (flags[5]) {
+      console.log("bert");
+      try {
+        const allData = await Promise.all(one.map(tableName =>
+            fetch(`http://localhost:3000/people/assistants/aggregated`, { 
+              credentials: "include",
+  
+              method: "GET",
+  
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+             },
+            }).then(response => response.json())));
+        onItemsChange(allData);
+      }catch (e) {
+        console.log(e);
+      }
+
     } else if(selectedColumns){
         try {
           const allData = await Promise.all(tableNames.map(tableName =>

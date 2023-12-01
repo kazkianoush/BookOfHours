@@ -34,6 +34,17 @@ class PeopleModel {
         )
     }
 
+    static getVisitorByLanguage(languageName) {
+      return database.promise().query(
+      `SELECT p.peopleName, s.skillName as language
+       FROM Visitor v, Language l, Skill s, People p
+       WHERE v.languageID = l.languageID
+       AND v.visitorID = p.peopleID
+       AND s.skillID = l.languageID
+       AND s.skillName LIKE ?;`, [`%${languageName}%`]
+      )
+    }
+
     static getNonLanguageTeachingVisitors() {
       return database.promise().query(
       `SELECT p.peopleName
@@ -48,11 +59,32 @@ class PeopleModel {
 
     static getUniqueLanguageVisitor() {
       return database.promise().query(
-      `SELECT s.skillName, v.languageID, COUNT(p.peopleName)
-      FROM Visitor v, People p, Skill s
-      WHERE v.visitorID = p.peopleID AND v.languageID IS NOT NULL AND s.skillID = v.languageID 
+      `SELECT v.languageID, COUNT(p.peopleName)
+      FROM Visitor v, People p
+      WHERE v.visitorID = p.peopleID AND v.languageID IS NOT NULL
       GROUP BY v.languageID
       HAVING COUNT(*) < 2;`
+      )
+    }
+
+    static getAllAssistants() {
+      return database.promise().query(
+        `SELECT a.assistantID, p.peopleName as assistantName, a.assistantSpecialty, a.assistantCost, a.assistantLocation
+         FROM Assistant a, People p
+         WHERE a.assistantID = p.peopleID
+        `
+      )
+    }
+
+    // Return the location of the assistants ingame where their cost is higher than the average cost 
+    // to all assistants from all locations in the game (too long to put in function name)
+    static getAllAssistantsNestedAggregationWithGroupBy() {
+      return database.promise().query(
+        `SELECT a.assistantLocation, AVG(a.assistantCost)
+        FROM Assistant a
+        WHERE a.assistantCost > (SELECT AVG(assistantCost) FROM Assistant)
+        GROUP BY a.assistantLocation;    
+        `
       )
     }
   
