@@ -37,4 +37,4 @@ router
   .route('/assistants/aggregated')
   .get(peopleController.getAllAssistantsNestedAggregationWithGroupBy);
   
-module.exports = router;
+module.exports = router; 
