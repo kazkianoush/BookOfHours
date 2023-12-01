@@ -3,7 +3,7 @@ import { useState } from "react";
 
 function FilterPanel(props) {
   const [selectedBookColumns, setSelectedBookColumns] = useState([true, false, false, false, false, false, false]);
-  const [selectedVisitorColumn, setSelectedVisitorColumn] = useState([false]);
+  // const [selectedVisitorColumn, setSelectedVisitorColumn] = useState([false]);
 
   const handleBookCheckboxes = (checkboxIndex) => {
     const updatedSelectedBookColumns = selectedBookColumns.map((column, index) =>
@@ -13,11 +13,11 @@ function FilterPanel(props) {
     props.bookColumns(updatedSelectedBookColumns);
   };
 
-  const handleVisitorCheckbox = () => {
-    const updatedSelectedVisitorColumns = !selectedVisitorColumn[0];
-    setSelectedVisitorColumn([updatedSelectedVisitorColumns]);
-    props.visitorColumn(updatedSelectedVisitorColumns);
-  };
+  // const handleVisitorCheckbox = () => {
+  //   const updatedSelectedVisitorColumns = !selectedVisitorColumn[0];
+  //   setSelectedVisitorColumn([updatedSelectedVisitorColumns]);
+  //   props.visitorColumn(updatedSelectedVisitorColumns);
+  // };
 
   return (
     <>

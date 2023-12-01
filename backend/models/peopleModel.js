@@ -15,7 +15,7 @@ class PeopleModel {
 
     static getAllVisitors() {
       return database.promise().query(
-      `SELECT p.peopleName, s.skillName as language
+      `SELECT p.peopleID, p.peopleName, s.skillName as language
       FROM Visitor v, Language l, Skill s, People p
       WHERE v.languageID = l.languageID
       AND v.visitorID = p.peopleID
@@ -59,7 +59,7 @@ class PeopleModel {
 
     static getUniqueLanguageVisitor() {
       return database.promise().query(
-      `SELECT v.languageID, COUNT(p.peopleName)
+      `SELECT v.languageID, COUNT(p.peopleName) as numberOfPeople
       FROM Visitor v, People p
       WHERE v.visitorID = p.peopleID AND v.languageID IS NOT NULL
       GROUP BY v.languageID
@@ -80,7 +80,7 @@ class PeopleModel {
     // to all assistants from all locations in the game (too long to put in function name)
     static getAllAssistantsNestedAggregationWithGroupBy() {
       return database.promise().query(
-        `SELECT a.assistantLocation, AVG(a.assistantCost)
+        `SELECT a.assistantLocation, AVG(a.assistantCost) as averageAssistantCost
         FROM Assistant a
         WHERE a.assistantCost > (SELECT AVG(assistantCost) FROM Assistant)
         GROUP BY a.assistantLocation;    

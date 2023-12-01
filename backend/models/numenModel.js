@@ -2,7 +2,7 @@ const database = require('../utils/database.js').connection;
 
 class NumenModel {  
     static getAllNumen() {
-      return database.promise().query('SELECT * FROM Memory INNER JOIN Numen ON Numen.numenID = Memory.memoryID ORDER BY numenID ASC');
+      return database.promise().query('SELECT m.MemoryID, m.memoryName, m.memorySources, m.memoryIsSound, m.memoryIsOmen, m.memoryIsPersistent, m.memoryIsWeather, n.bookID FROM Memory m, Numen n WHERE n.numenID = m.memoryID ORDER BY m.memoryID ASC;');
     }
 
     static getNumenByID(ID) {

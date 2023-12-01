@@ -42,11 +42,13 @@ function AdvancedPanel(props) {
         </div>
         <div>Visitors: &nbsp;
             Show languages spoken by only 1 visitor <input type="checkbox" checked ={advancedOptions[2]} onChange={() => handleAdvancedPanelCheckboxes(2)} /> &nbsp;
-            {/* Show visitors that don&apos;t teach player a new language  <input type="checkbox" checked ={advancedOptions[3]} onChange={() => handleAdvancedPanelCheckboxes(3)}/> &nbsp; */}
-        </div>
-        <div>Visitors: &nbsp;
-             Show non language teaching visitors only <input key = {Math.random()} type="checkbox" checked = {advancedOptions[4]} onChange={() => handleAdvancedPanelCheckboxes(4)}/> <br />&nbsp;
-             
+            Show visitors that don&apos;t teach player a new language  <input type="checkbox" checked ={advancedOptions[4]} onChange={() => handleAdvancedPanelCheckboxes(4)}/> &nbsp;
+            <div>
+            Find visitor by language they teach 
+            <form onSubmit={(e) => handleFindVisitorByLanguage(e)}>
+                <input value={languageString} onChange={(e) => setLanguageString(e.target.value)}></input>
+            </form>
+            </div>
         </div>
         <div>Assistants: &nbsp;
         location of the assistants ingame where their cost is higher <br />than the average cost to all assistants from all locations in the game <input key = {Math.random()} type="checkbox" checked = {advancedOptions[5]} onChange={() => handleAdvancedPanelCheckboxes(5)} /><br /> &nbsp;
@@ -61,16 +63,6 @@ function AdvancedPanel(props) {
                 disabled/>
              </form>
                &nbsp;
-        </div>
-        <div>Visitors: &nbsp;
-            Show languages spoken by only 1 visitor <input type="checkbox" checked ={advancedOptions[2]} onChange={() => handleAdvancedPanelCheckboxes(2)} /> &nbsp;
-            Show visitors that don&apos;t teach player a new language  <input type="checkbox" checked ={advancedOptions[3]} onChange={() => handleAdvancedPanelCheckboxes(3)}/> &nbsp;
-            <div>
-            Find visitor by language they teach 
-            <form onSubmit={(e) => handleFindVisitorByLanguage(e)}>
-                <input value={languageString} onChange={(e) => setLanguageString(e.target.value)}></input>
-            </form>
-            </div>
         </div>
         </>
     );

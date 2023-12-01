@@ -22,7 +22,6 @@ function InputForm({ onItemsChange }) {
   // flags[numenOnly, groupAspect, languageSpokenByOne, visitorsNotTeachPlayerNewLanguage]
   const [flags, setFlags] = useState(new Array(5).fill(false));
 
-  let numenOnly = 0;
   
   let list = {
     memoryID: 'ME111',
@@ -112,14 +111,6 @@ function InputForm({ onItemsChange }) {
     return tableName != null;
   }
 
-  const handleAdvancedFlags = (advancedOptions) => {
-    let updatedFlags = [...flags];
-    advancedOptions.map((bool, index) => {
-      updatedFlags[index] = bool;
-    })
-    setFlags(updatedFlags);
-  }
-
   const handleAdvancedBookSubmit = async (memoryString) => {
     let subUrl = ``;
     let cleanMemoryString = sanitizeInput(memoryString);
@@ -163,9 +154,10 @@ function InputForm({ onItemsChange }) {
     console.log(e);
     }
   }
+
   const fetchAPI = async (e, subUrl) => {
     e.preventDefault();
-    if (numenOnly) {
+    if (flags[0]) {
       try {
         const numenData = await fetch(`http://localhost:3000/numen` + subUrl, { 
           credentials: "include",
@@ -178,14 +170,14 @@ function InputForm({ onItemsChange }) {
          },
 
         }).then(response => response.json())
+        console.log(numenData);
         onItemsChange([numenData]);
       } catch (e) {
       console.log(e);
       }
     } else if (flags[4]) {
-      console.log("boom");
       try {
-        const allData = await Promise.all(one.map(tableName =>
+        const allData = await Promise.all(one.map(() =>
             fetch(`http://localhost:3000/people/visitors/?nonLanguageTeaching=true`, { 
               credentials: "include",
   
@@ -202,9 +194,8 @@ function InputForm({ onItemsChange }) {
       }
     
     } else if (flags[2]) {
-      console.log("girt");
       try {
-        const allData = await Promise.all(one.map(tableName =>
+        const allData = await Promise.all(one.map(() =>
             fetch(`http://localhost:3000/people/visitors/?uniqueLanguageVisitor=true`, { 
               credentials: "include",
   
@@ -223,7 +214,7 @@ function InputForm({ onItemsChange }) {
     } else if (flags[5]) {
       console.log("bert");
       try {
-        const allData = await Promise.all(one.map(tableName =>
+        const allData = await Promise.all(one.map(() =>
             fetch(`http://localhost:3000/people/assistants/aggregated`, { 
               credentials: "include",
   
@@ -297,12 +288,12 @@ function InputForm({ onItemsChange }) {
     })
     setSelectedColumnsAllTable(updatedState);
   }
-  const handleFilterVisitorColumn = (filteredColumn) => {
-    let updatedState = [...selectedColumnsAllTable];
-    updatedState[2][0] = filteredColumn;
-    console.log(filteredColumn)
-    setSelectedColumnsAllTable(updatedState);
-  };
+  // const handleFilterVisitorColumn = (filteredColumn) => {
+  //   let updatedState = [...selectedColumnsAllTable];
+  //   updatedState[2][0] = filteredColumn;
+  //   console.log(filteredColumn)
+  //   setSelectedColumnsAllTable(updatedState);
+  // };
 
   const handleAdvancedClick = () => {
     const advancedPanel = document.getElementById('advanced');
@@ -362,9 +353,10 @@ function InputForm({ onItemsChange }) {
           `Insert request failed with status: ${response.status}`
         );
       }
-
-      console.log("Insert request successful");
+      
+      alert("Insert request successful");
     } catch (error) {
+      alert("Error during insert request: " + error.message);
       console.error("Error during insert request:", error.message);
     }
   };
@@ -415,8 +407,10 @@ function InputForm({ onItemsChange }) {
       }
   
       const responseData = await response.json();
+      alert("Update request successful");
       console.log("Update request successful", responseData);
     } catch (error) {
+      alert("Error during update request: " + error.message)
       console.error("Error during update request:", error.message);
     }
   };
@@ -438,9 +432,10 @@ function InputForm({ onItemsChange }) {
         throw new Error(`Delete request failed with status: ${response.status}`);
       }
   
-      console.log("Delete request successful");
+      alert("Delete request successful");
       // You may want to update your state or perform additional actions after a successful delete
     } catch (error) {
+      alert("Error during delete request: " + error.message);
       console.error("Error during delete request:", error.message);
     }
   };
