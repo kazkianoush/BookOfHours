@@ -15,11 +15,14 @@ function InputForm({ onItemsChange }) {
 
   const [selectedColumnsAllTable, setSelectedColumnsAllTable] = useState([
     [false, false, false, false, false, false, false, false],
-    [true, false, false, false, false, false, false]
+    [true, false, false, false, false, false, false],
+    [false]
   ]);
 
   // flags[numenOnly, groupAspect, languageSpokenByOne, visitorsNotTeachPlayerNewLanguage]
-  const [flags, setFlags] = useState(new Array(4).fill(false));
+  const [flags, setFlags] = useState(new Array(5).fill(false));
+
+  let numenOnly = 0;
   
   let list = {
     memoryID: 'ME111',
@@ -43,6 +46,7 @@ function InputForm({ onItemsChange }) {
   let selectedColumns = "";
   let initTableNames = [`memory`,`book`, `people/visitors`, `people/assistants`]
   let tableNames = initTableNames;
+  let one = ['one'];
 
   const sanitizeInput = (str) => {
     return str.replace(/[`~!@#$%^&*_|+\-=?;:'.]/gi, "");
@@ -65,6 +69,15 @@ function InputForm({ onItemsChange }) {
     fetchAPI(e, subUrl);
   };
 
+
+  const handleAdvancedFlags = (advancedOptions) => {
+    let updatedFlags = [...flags];
+    advancedOptions.map((bool, index) => {
+      updatedFlags[index] = bool;
+    })
+    setFlags(updatedFlags);
+    console.log("updated falgs:"+updatedFlags)
+  }
   const handleSelectedColumns = () => {
     const bookFilter = selectedColumnsAllTable[1];
     console.log(bookFilter);
@@ -150,10 +163,9 @@ function InputForm({ onItemsChange }) {
     console.log(e);
     }
   }
-
   const fetchAPI = async (e, subUrl) => {
     e.preventDefault();
-    if (flags[0]) {
+    if (numenOnly) {
       try {
         const numenData = await fetch(`http://localhost:3000/numen` + subUrl, { 
           credentials: "include",
@@ -170,6 +182,44 @@ function InputForm({ onItemsChange }) {
       } catch (e) {
       console.log(e);
       }
+    } else if (flags[4]) {
+      console.log("boom");
+      try {
+        const allData = await Promise.all(one.map(tableName =>
+            fetch(`http://localhost:3000/people/visitors/?nonLanguageTeaching=true`, { 
+              credentials: "include",
+  
+              method: "GET",
+  
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+             },
+            }).then(response => response.json())));
+        onItemsChange(allData);
+      }catch (e) {
+        console.log(e);
+      }
+    
+    } else if (flags[2]) {
+      console.log("girt");
+      try {
+        const allData = await Promise.all(one.map(tableName =>
+            fetch(`http://localhost:3000/people/visitors/?uniqueLanguageVisitor=true`, { 
+              credentials: "include",
+  
+              method: "GET",
+  
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+             },
+            }).then(response => response.json())));
+        onItemsChange(allData);
+      }catch (e) {
+        console.log(e);
+      }
+
     } else if(selectedColumns){
         try {
           const allData = await Promise.all(tableNames.map(tableName =>
@@ -224,9 +274,16 @@ function InputForm({ onItemsChange }) {
     let updatedState = [...selectedColumnsAllTable];
     filteredColumns.map((state, i) => {
       updatedState[1][i] = state;
+      console.log(state)
     })
     setSelectedColumnsAllTable(updatedState);
   }
+  const handleFilterVisitorColumn = (filteredColumn) => {
+    let updatedState = [...selectedColumnsAllTable];
+    updatedState[2][0] = filteredColumn;
+    console.log(filteredColumn)
+    setSelectedColumnsAllTable(updatedState);
+  };
 
   const handleAdvancedClick = () => {
     const advancedPanel = document.getElementById('advanced');
