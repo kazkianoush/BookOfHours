@@ -3,8 +3,11 @@ import InputForm from "../inputForm/inputForm";
 import OutputPanel from "../outputPanel/outputPanel";
 
 function Display() {
-  const [data, setData] = useState("");
+  const [items, setItems] = useState([])
 
+  const handleItemsChange= (newItems) => {
+    setItems(newItems)
+  }
   return (
     <>
       <div>
@@ -12,9 +15,9 @@ function Display() {
         <h3>A video game developed by WeatherFactory</h3>
       </div>
       <div style={{ height: "2rem" }}></div>
-      <InputForm setData = {setData} />
+      <InputForm onItemsChange = {handleItemsChange} />
       <div style={{ height: "2rem" }}></div>
-      <OutputPanel data = {data} />
+      <OutputPanel data = {items} />
     </>
   );
 }

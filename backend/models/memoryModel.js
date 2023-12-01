@@ -17,6 +17,19 @@ class MemoryModel {
       return database.promise().query("SELECT * FROM Memory WHERE memoryID = ? OR memoryID LIKE ?", [ID, `%${ID}%`]);
     }
   
+
+
+    static create(newMemory) {
+      const { memoryID, memoryName, memorySources, memoryIsSound, memoryIsOmen, memoryIsPersistent, memoryIsWeather } = newMemory;
+  
+      // Perform the database insert
+      return database
+        .promise()
+        .query(
+          'INSERT IGNORE INTO Memory(memoryID, memoryName, memorySources, memoryIsSound, memoryIsOmen, memoryIsPersistent, memoryIsWeather) VALUES (?, ?, ?, ?, ?, ?, ?)',
+          [memoryID, memoryName, memorySources, memoryIsSound, memoryIsOmen, memoryIsPersistent, memoryIsWeather]
+        );
+    }
     // static post(item) {
     //   return database.promise().query('INSERT INTO Memory (item) VALUES (?)', [item]);
     // }

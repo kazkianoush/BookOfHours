@@ -9,13 +9,11 @@ router
   .post(memoryController.createMemory); 
 
 router
-  .route('/:name')
-  .get(memoryController.getMemoryByName) 
-  // .patch(memoryController.updateMemory) 
-  // .delete(memoryController.deleteMemory); 
+  .route('/findByName/:name')
+  .get(memoryController.getMemoryByName);
 
 router
-  .route('/:id')
+  .route('/findByID/:id')
   .get(memoryController.getMemoryByID)
   
 module.exports = router;
