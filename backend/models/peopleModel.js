@@ -59,9 +59,9 @@ class PeopleModel {
 
     static getUniqueLanguageVisitor() {
       return database.promise().query(
-      `SELECT s.skillName, v.languageID, COUNT(p.peopleName)
-      FROM Visitor v, People p, Skill s
-      WHERE v.visitorID = p.peopleID AND v.languageID IS NOT NULL AND s.skillID = v.languageID 
+      `SELECT v.languageID, COUNT(p.peopleName)
+      FROM Visitor v, People p
+      WHERE v.visitorID = p.peopleID AND v.languageID IS NOT NULL
       GROUP BY v.languageID
       HAVING COUNT(*) < 2;`
       )

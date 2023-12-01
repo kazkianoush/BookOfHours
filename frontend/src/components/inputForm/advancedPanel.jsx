@@ -2,7 +2,7 @@ import { useState } from "react";
 
 
 function AdvancedPanel(props) {
-    const [advancedOptions, setAdvancedOptions] = useState(new Array(5).fill(false));
+    const [advancedOptions, setAdvancedOptions] = useState(new Array(6).fill(false));
     const [memoryString, setMemoryString] = useState("");
     const [languageString, setLanguageString] = useState("");
     
@@ -45,7 +45,11 @@ function AdvancedPanel(props) {
             {/* Show visitors that don&apos;t teach player a new language  <input type="checkbox" checked ={advancedOptions[3]} onChange={() => handleAdvancedPanelCheckboxes(3)}/> &nbsp; */}
         </div>
         <div>Visitors: &nbsp;
-             Show non language teaching visitors only <input key = {Math.random()} type="checkbox" checked = {advancedOptions[4] == true} onChange={() => handleAdvancedPanelCheckboxes(4)}/> &nbsp;
+             Show non language teaching visitors only <input key = {Math.random()} type="checkbox" checked = {advancedOptions[4]} onChange={() => handleAdvancedPanelCheckboxes(4)}/> <br />&nbsp;
+             
+        </div>
+        <div>Assistants: &nbsp;
+        location of the assistants ingame where their cost is higher <br />than the average cost to all assistants from all locations in the game <input key = {Math.random()} type="checkbox" checked = {advancedOptions[5]} onChange={() => handleAdvancedPanelCheckboxes(5)} /><br /> &nbsp;
         </div>
 
         <div>Book: &nbsp;
