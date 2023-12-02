@@ -3,7 +3,7 @@ import { useState } from "react";
 
 function FilterPanel(props) {
   const [selectedBookColumns, setSelectedBookColumns] = useState([true, false, false, false, false, false, false]);
-  // const [selectedVisitorColumn, setSelectedVisitorColumn] = useState([false]);
+  const [showMemoryTable, setShowMemoryTable] = useState([true]);
 
   const handleBookCheckboxes = (checkboxIndex) => {
     const updatedSelectedBookColumns = selectedBookColumns.map((column, index) =>
@@ -13,25 +13,19 @@ function FilterPanel(props) {
     props.bookColumns(updatedSelectedBookColumns);
   };
 
-  // const handleVisitorCheckbox = () => {
-  //   const updatedSelectedVisitorColumns = !selectedVisitorColumn[0];
-  //   setSelectedVisitorColumn([updatedSelectedVisitorColumns]);
-  //   props.visitorColumn(updatedSelectedVisitorColumns);
-  // };
-
   return (
     <>
       <div>Change what can be shown using the checkboxes</div>
       <div>
-        Memory: &nbsp;
-        Show <input type="checkbox" /> &nbsp;
-        MemoryID <input type="checkbox" /> &nbsp;
+        {/* Memory: &nbsp;
+        Show <input type="checkbox" checked={showMemoryTable} onChange={() => setShowMemoryTable(!showMemoryTable)}/> &nbsp; */}
+        {/* MemoryID <input type="checkbox" /> &nbsp;
         MemoryName <input type="checkbox" /> &nbsp;
         MemorySources <input type="checkbox" /> &nbsp;
         MemoryIsSound <input type="checkbox" /> &nbsp;
         MemoryIsOmen <input type="checkbox" /> &nbsp;
         memoryIsPersistent <input type="checkbox" /> &nbsp;
-        MemoryIsWeather <input type="checkbox" /> &nbsp;
+        MemoryIsWeather <input type="checkbox" /> &nbsp; */}
       </div>
       <div>
         Book: &nbsp;
