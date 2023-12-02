@@ -43,7 +43,7 @@ function InputForm({ onItemsChange }) {
   }
   
   let selectedColumns = "";
-  let initTableNames = [`memory`,`book`, `people/visitors`, `people/assistants`]
+  let initTableNames = [`memory`,`book`, `people/visitors`]
   let tableNames = initTableNames;
   let one = ['one'];
 
